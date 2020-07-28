@@ -12,7 +12,8 @@ class Main(Cog_Extension):
     @commands.command()
     async def ran(self,ctx):
         rannum = random.randint(1,10)
-        await ctx.send(str(rannum) + str(ctx.message.id))
+        await ctx.send(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
+        print(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
         
 
 def setup(bot):
