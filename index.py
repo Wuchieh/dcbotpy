@@ -16,19 +16,19 @@ async def on_ready():
 @bot.command()
 async def load(ctx, extension):
     bot.load_extension(F'cmds.{extension}')
-    await ctx.send(F'Loaded {extension} done.')
+    await ctx.send(F'以加載 {extension}')
     print(F'\n---------------------------------\n以加載 {extension}\n---------------------------------\n')
 
 @bot.command()
 async def unload(ctx, extension):
     bot.unload_extension(F'cmds.{extension}')
-    await ctx.send(F'Un - Loaded {extension} done.')
+    await ctx.send(F'以卸載 {extension}')
     print(F'\n---------------------------------\n以卸載 {extension}\n---------------------------------\n')
 
 @bot.command()
 async def reload(ctx, extension):
     bot.reload_extension(F'cmds.{extension}')
-    await ctx.send(F'Re - Loaded {extension} done.')
+    await ctx.send(F'以重新加載 {extension}')
     print(F'\n---------------------------------\n以重新加載 {extension}\n---------------------------------\n')
 
 for Filename in os.listdir('./cmds'):
