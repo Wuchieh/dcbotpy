@@ -1,11 +1,12 @@
 import discord
 from discord.ext import commands
 import json
+import random
 
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix=jdata['command_prefix'])
 
 @bot.event
 async def on_ready():
