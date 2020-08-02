@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from core.classes import Cog_Extension
+channelid ='695926882792767539'
 
 class Msg(Cog_Extension):
 
@@ -8,6 +9,17 @@ class Msg(Cog_Extension):
     async def sayd(self,ctx,*,msg):
         await ctx.message.delete()
         await ctx.send(msg)
+    
+    @commands.command()
+    async def setchannelid(self,ctx,msg):
+        if str.isdigit(msg) and len(msg) == 18:
+            channelid = commands.get_channel(msg)
+            await ctx.send('頻道ID以修改為：' + str(channelid) + '\n'+ str(ctx.message.channel))
+            print('ok')
+        else:
+            print('no')
+        #ctx.message.channel.id = channelid
+        #await ctx.send('ChannelID已設為 : ' + msg)
     
     @commands.command()
     async def clear(self,ctx,num:int):

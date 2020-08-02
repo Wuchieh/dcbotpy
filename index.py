@@ -7,7 +7,11 @@ import os
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 
-bot = commands.Bot(command_prefix=jdata['command_prefix'])
+bot = commands.AutoShardedBot(command_prefix=jdata['command_prefix'])
+helper = commands.HelpCommand()
+cmdpy = []
+
+#@helper.show_hidden
 
 @bot.event
 async def on_ready():
@@ -33,13 +37,33 @@ async def reload(ctx, extension):
     await ctx.send(F'已重新加載 {extension}')
     print(F'\n---------------------------------\n已重新加載 {extension}\n---------------------------------\n')
 
-@bot.command()
+@bot.group()
 async def user(ctx):
     await ctx.send('Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+
     '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id))
 
+@user.command()
+async def showpy(ctx):
+    msg = '========MenuList========\n'
+    for py in cmdpy:
+        print(py)
+        msg = str(msg) + str(py) +'\n'
+    await ctx.send(msg)
+
+
+@bot.command()
+async def disconnect(ctx):
+    await ctx.send('機器人已關閉')
+    await bot.close()
+
+@bot.event
+async def on_disconnect():
+    print('機器人已關閉')
 for Filename in os.listdir('./cmds'):
     if Filename.endswith('.py'):
+        print(Filename)
+        cmdpy.append(Filename)
         bot.load_extension(F'cmds.{Filename[:-3]}')
+
 if __name__ == "__main__":
     bot.run(jdata['TOKEN'])

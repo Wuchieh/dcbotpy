@@ -4,7 +4,7 @@ from core.classes import Cog_Extension
 
 class onoff(Cog_Extension):
     @commands.command()
-    async def onoffline(self,ctx):
+    async def member(self,ctx):
         memberlist = ctx.guild.members
         onlinelist = []
         onlineidlist = []
