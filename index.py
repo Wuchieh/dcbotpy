@@ -3,15 +3,25 @@ from discord.ext import commands
 import json
 import random
 import os
+import keep_alive
 
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 
-bot = commands.AutoShardedBot(command_prefix=jdata['command_prefix'])
-helper = commands.HelpCommand()
+bot = commands.Bot(command_prefix=jdata['command_prefix'])
 cmdpy = []
+bot.remove_command('help')
 
-#@helper.show_hidden
+@bot.group()
+async def help(ctx):
+    await ctx.send('```css\n'+str(jdata['command_prefix'])+'ping 顯示機器人延遲\n'
+    +str(jdata['command_prefix'])+'ran 骰子遊戲\n'
+    +str(jdata['command_prefix'])+'clear [num] 刪除指定數量的聊天內容\n'
+    +str(jdata['command_prefix'])+'sayd [msg] 使機器人說話\n'
+    +str(jdata['command_prefix'])+'member 顯示伺服器中所有人的狀態\n'
+    +str(jdata['command_prefix'])+'offline 顯示離線名單\n'
+    +str(jdata['command_prefix'])+'online 顯示上線名單\n'
+    +str(jdata['command_prefix'])+'user 顯示個人訊息\n```')
 
 @bot.event
 async def on_ready():
@@ -40,10 +50,12 @@ async def reload(ctx, extension):
 @bot.group()
 async def user(ctx):
     await ctx.send('Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+
-    '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id))
+    '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id) +'\nGuild.owner:'+str(ctx.guild.owner) +
+    '\nGuild.owner_id:' +str(ctx.guild.owner_id)+'\nGuild.name:' +str(ctx.guild.name))
 
 @user.command()
 async def showpy(ctx):
+    await ctx.channel.purge(limit=2)
     msg = '========MenuList========\n'
     for py in cmdpy:
         print(py)
@@ -59,6 +71,8 @@ async def disconnect(ctx):
 @bot.event
 async def on_disconnect():
     print('機器人已關閉')
+
+
 for Filename in os.listdir('./cmds'):
     if Filename.endswith('.py'):
         print(Filename)
@@ -66,4 +80,5 @@ for Filename in os.listdir('./cmds'):
         bot.load_extension(F'cmds.{Filename[:-3]}')
 
 if __name__ == "__main__":
+    keep_alive.keep_alive()
     bot.run(jdata['TOKEN'])
