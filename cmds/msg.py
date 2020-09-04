@@ -20,6 +20,13 @@ class Msg(Cog_Extension):
     async def sayd(self,ctx,*,msg):
         await ctx.message.delete()
         await ctx.send(msg)
+        
+    @commands.command()
+    async def send(self,ctx,userid,*,msg):
+        print(userid)
+        print(msg)
+        user = self.bot.get_user(int(userid))
+        await user.send(msg)
     
     @commands.command()
     async def 身分組(self,ctx):
@@ -30,7 +37,6 @@ class Msg(Cog_Extension):
         '<:pubg:750374968407097384>  : 絕地求生（PlayerUnknown'+jdata['ss']+'s Battlegrounds）\n\n'
         '<:VALORANT:750374968105238630>  : 特戰英豪／瓦羅蘭（VALORANT）')
 
-    
     @commands.command()
     async def clear(self,ctx,num:int):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:

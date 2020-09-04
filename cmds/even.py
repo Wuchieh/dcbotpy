@@ -18,6 +18,10 @@ class even(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_message(self,msg):
+        arg = msg.channel
+        CMD = 'Direct Message with'
+        CMDs = CMD.split(' ')
+        args = str(arg).split(' ')
         if msg.author.id == 656761631224758282 and msg.content == '<:lol:750374968864276570>  : 英雄聯盟（League of Legends）\n\n<:GTA:750374967786471466>  : 俠盜獵車手系列（Grand Theft Auto 1~5）\n\n<:R6:750374968113496123>  : 虹彩六號（Rainbow Six Siege）\n\n<:pubg:750374968407097384>  : 絕地求生（PlayerUnknown'+jdata['ss']+'s Battlegrounds）\n\n<:VALORANT:750374968105238630>  : 特戰英豪／瓦羅蘭（VALORANT）':
             for om in roledata2:
                 u1,u2,u3 = om.split(':')
@@ -25,6 +29,12 @@ class even(Cog_Extension):
                 u4,u5 = u3.split('>')
                 print(u4,u5)
                 await msg.add_reaction(self.bot.get_emoji(int(u4)))
+        if CMDs[0] == args[0] and CMDs[1] == args[1] and CMDs[2] == args[2] and msg.author != self.bot.user:
+            user = self.bot.get_user(int(jdata['owner']))
+            print(msg.content)
+            await user.send(str(msg.author)+':\n'+str(msg.content))
+        if '<@!656761631224758282>' in str(msg.content):
+            await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
         pass
 
     @commands.Cog.listener()

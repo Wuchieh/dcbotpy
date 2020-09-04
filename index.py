@@ -49,9 +49,19 @@ async def reload(ctx, extension):
 
 @bot.group()
 async def user(ctx):
-    await ctx.send('Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+
-    '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id) +'\nGuild.owner:'+str(ctx.guild.owner) +
-    '\nGuild.owner_id:' +str(ctx.guild.owner_id)+'\nGuild.name:' +str(ctx.guild.name))
+    arg = ctx.message.channel
+    args = str(arg).split(' ')
+    CMD = 'Direct Message with'
+    CMDs = CMD.split(' ')
+    if CMDs[0] == args[0] and CMDs[1] == args[1] and CMDs[2] == args[2]:
+        print('私人訊息')
+        await ctx.send('Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+
+        '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id))
+    else:
+        print('群組訊息')
+        await ctx.send('Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+
+        '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id) +'\nGuild.owner:'+str(ctx.guild.owner) +
+        '\nGuild.owner_id:' +str(ctx.guild.owner_id)+'\nGuild.name:' +str(ctx.guild.name))
 
 @user.command()
 async def showpy(ctx):
