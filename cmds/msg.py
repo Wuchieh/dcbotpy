@@ -23,10 +23,13 @@ class Msg(Cog_Extension):
         
     @commands.command()
     async def send(self,ctx,userid,*,msg):
-        print(userid)
-        print(msg)
         user = self.bot.get_user(int(userid))
         await user.send(msg)
+
+    @commands.command()
+    async def sendch(self,ctx,chid,*,msg):
+        ch = self.bot.get_channel(int(chid))
+        await ch.send(msg)
     
     @commands.command()
     async def 身分組(self,ctx):

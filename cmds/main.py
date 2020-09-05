@@ -14,6 +14,13 @@ class Main(Cog_Extension):
         rannum = random.randint(1,10)
         await ctx.send(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
         print(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
+
+    @commands.command()
+    async def move(self,ctx,id):
+        await ctx.message.delete()
+        chid = self.bot.get_channel(int(id))
+        member = ctx.message.guild.get_member(ctx.message.author.id)
+        await member.move_to(chid)
         
 
 def setup(bot):
