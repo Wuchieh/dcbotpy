@@ -20,6 +20,13 @@ class Msg(Cog_Extension):
     async def sayd(self,ctx,*,msg):
         await ctx.message.delete()
         await ctx.send(msg)
+        print(str(ctx.message.author) +'說:'+ msg)
+    
+    @commands.command()
+    async def tts(self,ctx,*,msg):
+        await ctx.message.delete()
+        await ctx.send(msg, tts=True)
+        print(str(ctx.message.author) +'說:'+ msg)
         
     @commands.command()
     async def send(self,ctx,userid,*,msg):

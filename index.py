@@ -53,15 +53,14 @@ async def user(ctx):
     args = str(arg).split(' ')
     CMD = 'Direct Message with'
     CMDs = CMD.split(' ')
+    msg = 'Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+'\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id)
     if CMDs[0] == args[0] and CMDs[1] == args[1] and CMDs[2] == args[2]:
         print('私人訊息')
-        await ctx.send('Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+
-        '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id))
+        await ctx.send(msg)
     else:
         print('群組訊息')
-        await ctx.send('Author:'+str(ctx.message.author)+'\nAuthor ID:'+ str(ctx.message.author.id)+
-        '\nChannel:'+str(ctx.message.channel)+'\nChannel ID:'+str(ctx.message.channel.id) +'\nGuild.owner:'+str(ctx.guild.owner) +
-        '\nGuild.owner_id:' +str(ctx.guild.owner_id)+'\nGuild.name:' +str(ctx.guild.name))
+        msg = msg +'\nGuild.owner:'+str(ctx.guild.owner) +'\nGuild.owner_id:' +str(ctx.guild.owner_id)+'\nGuild.name:' +str(ctx.guild.name)
+        await ctx.send(msg)
 
 @user.command()
 async def showpy(ctx):

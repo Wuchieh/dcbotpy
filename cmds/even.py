@@ -35,6 +35,15 @@ class even(Cog_Extension):
             await user.send(str(msg.author)+':\n'+str(msg.content))
         if '<@!656761631224758282>' in str(msg.content):
             await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
+        if '<@656761631224758282>' in str(msg.content):
+            await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
+        if '<@&656761631224758282>' in str(msg.content):
+            await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
+        if '早安' in str(msg.content) and msg.author != self.bot.user:
+            await msg.channel.send(str(msg.author)+'早安')
+        #if msg.author.id == 462698977331249172:
+        #    await msg.delete()
+        print(str(msg.author) + '說:' + msg.content)
         pass
 
     @commands.Cog.listener()

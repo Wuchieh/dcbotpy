@@ -21,6 +21,14 @@ class Main(Cog_Extension):
         chid = self.bot.get_channel(int(id))
         member = ctx.message.guild.get_member(ctx.message.author.id)
         await member.move_to(chid)
+
+    @commands.command()
+    async def moveto(self,ctx,uid,cid):
+        await ctx.message.delete()
+        chid = self.bot.get_channel(int(cid))
+        member = ctx.message.guild.get_member(int(uid))
+        print(str(chid)+str(member))
+        await member.move_to(chid)
         
 
 def setup(bot):
