@@ -14,6 +14,12 @@ class Main(Cog_Extension):
         rannum = random.randint(1,10)
         await ctx.send(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
         print(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
+        
+    @commands.command()
+    async def kick(self,ctx,id,r):
+      if ctx.message.author.id == 476422785833631749:
+        member = ctx.guild.get_member(int(id))
+        await member.kick(reason=r)
 
     @commands.command()
     async def move(self,ctx,id):

@@ -23,6 +23,31 @@ class even(Cog_Extension):
         CMDs = CMD.split(' ')
         args = str(arg).split(' ')
         if msg.author.id == 656761631224758282 and msg.content == '<:lol:750374968864276570>  : 英雄聯盟（League of Legends）\n\n<:GTA:750374967786471466>  : 俠盜獵車手系列（Grand Theft Auto 1~5）\n\n<:R6:750374968113496123>  : 虹彩六號（Rainbow Six Siege）\n\n<:pubg:750374968407097384>  : 絕地求生（PlayerUnknown'+jdata['ss']+'s Battlegrounds）\n\n<:VALORANT:750374968105238630>  : 特戰英豪／瓦羅蘭（VALORANT）':
+            roledata =[]
+            roledata2 =[]
+            num = 0
+            for i in jdata['role']:
+                num+=1
+                roledata.append(i)
+            num2 = num//2
+            for roleadd in range(num2):
+                roledata2.append(roledata[roleadd*2])
+            for om in roledata2:
+                u1,u2,u3 = om.split(':')
+                print(om,u1,u2,u3)
+                u4,u5 = u3.split('>')
+                print(u4,u5)
+                await msg.add_reaction(self.bot.get_emoji(int(u4)))
+        if msg.author.id == 656761631224758282 and msg.content == '<:Warframe:752543133988028469>  : 戰甲神兵（Warframe）\n\n<:TheDivision:752363812329488384>  : 全境封鎖（The Division ™）\n\n<:TheDivision2:752363837260562472>   : 全境封鎖2（The Division 2®）\n\n<:Minecraft:752529033006153778>   : 當個創世神（Minecraft）\n\n<:Fallguys:752543133706748036>   : 糖豆人（Fall Guys）\n\n<:L4D2:752561204186054686> : 惡靈勢力2（Left 4 Dead 2）':
+            roledata =[]
+            roledata2 =[]
+            num = 0
+            for i in jdata['role2']:
+                num+=1
+                roledata.append(i)
+            num2 = num//2
+            for roleadd in range(num2):
+                roledata2.append(roledata[roleadd*2])
             for om in roledata2:
                 u1,u2,u3 = om.split(':')
                 print(om,u1,u2,u3)
@@ -54,6 +79,10 @@ class even(Cog_Extension):
                 print('已給予身分組')
                 role = guild.get_role(int(roledata[releadd+1]))
                 await pl.member.add_roles(role)
+            if str(pl.message_id) == jdata['msgid2'] and str(pl.emoji) == roledata[releadd]:
+                print('已給予身分組')
+                role = guild.get_role(int(roledata[releadd+1]))
+                await pl.member.add_roles(role)
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,pl):
@@ -64,6 +93,12 @@ class even(Cog_Extension):
                 user = guild.get_member(pl.user_id)
                 role = guild.get_role(int(roledata[releadd+1]))
                 await user.remove_roles(role)
+            if str(pl.message_id) == jdata['msgid2'] and str(pl.emoji) == roledata[releadd]:
+                print('已移除身分組')
+                user = guild.get_member(pl.user_id)
+                role = guild.get_role(int(roledata[releadd+1]))
+                await user.remove_roles(role)
+    
 
 def setup(bot):
     bot.add_cog(even(bot))

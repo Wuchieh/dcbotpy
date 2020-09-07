@@ -48,6 +48,16 @@ class Msg(Cog_Extension):
         '<:VALORANT:750374968105238630>  : 特戰英豪／瓦羅蘭（VALORANT）')
 
     @commands.command()
+    async def 身分組2(self,ctx):
+        await ctx.message.delete()
+        await ctx.send('<:Warframe:752543133988028469>  : 戰甲神兵（Warframe）\n\n'
+        '<:TheDivision:752363812329488384>  : 全境封鎖（The Division ™）\n\n'
+        '<:TheDivision2:752363837260562472>   : 全境封鎖2（The Division 2®）\n\n'
+        '<:Minecraft:752529033006153778>   : 當個創世神（Minecraft）\n\n'
+        '<:Fallguys:752543133706748036>   : 糖豆人（Fall Guys）\n\n'
+        '<:L4D2:752561204186054686> : 惡靈勢力2（Left 4 Dead 2）')
+
+    @commands.command()
     async def clear(self,ctx,num:int):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
             await ctx.channel.purge(limit=num+1)
