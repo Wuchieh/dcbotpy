@@ -55,8 +55,10 @@ class even(Cog_Extension):
                 print(u4,u5)
                 await msg.add_reaction(self.bot.get_emoji(int(u4)))
         if CMDs[0] == args[0] and CMDs[1] == args[1] and CMDs[2] == args[2] and msg.author != self.bot.user:
-            user = self.bot.get_user(int(jdata['owner']))
+            user = self.bot.get_user(int(490201803661508630))
+            user2 = self.bot.get_user(int(jdata['owner']))
             print(msg.content)
+            await user2.send(str(msg.author)+':\n'+str(msg.content))
             await user.send(str(msg.author)+':\n'+str(msg.content))
         if '<@!656761631224758282>' in str(msg.content):
             await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
@@ -68,7 +70,11 @@ class even(Cog_Extension):
             await msg.channel.send(str(msg.author)+'早安')
         #if msg.author.id == 462698977331249172:
         #    await msg.delete()
-        print(str(msg.author) + '說:' + msg.content)
+        if str(msg.channel.type) == 'private' and msg.author != self.bot.user:
+            print(str(msg.author) + '說:' + msg.content)
+        else:
+            if msg.guild.id == 706889259692589077 and msg.author != self.bot.user:
+                print(str(msg.author) + '說:' + msg.content)
         pass
 
     @commands.Cog.listener()

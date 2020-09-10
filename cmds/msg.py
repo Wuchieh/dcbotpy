@@ -30,8 +30,17 @@ class Msg(Cog_Extension):
         
     @commands.command()
     async def send(self,ctx,userid,*,msg):
-        user = self.bot.get_user(int(userid))
-        await user.send(msg)
+        if '!' in userid:
+            user = str(userid).split('!')
+        else:
+            user = str(userid).split('@')
+        if str.isdigit(user[0]):
+            user2 = self.bot.get_user(int(userid))
+            await user2.send(msg)
+        else:
+            user1 = str(user[1]).split('>')
+            user2 = self.bot.get_user(int(user1[0]))
+            await user2.send(msg)
 
     @commands.command()
     async def sendch(self,ctx,chid,*,msg):
@@ -44,7 +53,7 @@ class Msg(Cog_Extension):
         await ctx.send('<:lol:750374968864276570>  : 英雄聯盟（League of Legends）\n\n'
         '<:GTA:750374967786471466>  : 俠盜獵車手系列（Grand Theft Auto 1~5）\n\n'
         '<:R6:750374968113496123>  : 虹彩六號（Rainbow Six Siege）\n\n'
-        '<:pubg:750374968407097384>  : 絕地求生（PlayerUnknown'+jdata['ss']+'s Battlegrounds）\n\n'
+        '<:pubg:750374968407097384>  : 絕地求生（PlayerUnknown'+"jdata['ss']"+'s Battlegrounds）\n\n'
         '<:VALORANT:750374968105238630>  : 特戰英豪／瓦羅蘭（VALORANT）')
 
     @commands.command()
@@ -61,7 +70,8 @@ class Msg(Cog_Extension):
     async def clear(self,ctx,num:int):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
             await ctx.channel.purge(limit=num+1)
-            #await ctx.send('https://tenor.com/view/explode-blast-blow-nuclear-boom-gif-15025770')
+            if num >= 50 :
+              await ctx.send('https://tenor.com/view/explode-blast-blow-nuclear-boom-gif-15025770')
             print(str(ctx.message.author)+' ---ID '+str(ctx.message.author.id)+
             '在 << '+str(ctx.channel.name)+' >> 頻道使用了clear指令刪除了'+str(int(num))+'個對話')
         else:
