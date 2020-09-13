@@ -21,7 +21,8 @@ async def help(ctx):
     +str(jdata['command_prefix'])+'member 顯示伺服器中所有人的狀態\n'
     +str(jdata['command_prefix'])+'offline 顯示離線名單\n'
     +str(jdata['command_prefix'])+'online 顯示上線名單\n'
-    +str(jdata['command_prefix'])+'user 顯示個人訊息\n```')
+    +str(jdata['command_prefix'])+'user 顯示個人訊息\n'
+    +str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道```')
 
 @bot.event
 async def on_ready():

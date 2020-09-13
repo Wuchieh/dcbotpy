@@ -9,13 +9,14 @@ class Main(Cog_Extension):
     @commands.command()
     async def ping(self,ctx):
         await ctx.send(F'{round(self.bot.latency*1000)} 毫秒')
-        d = os.popen("ping google.com")
-        d2 = str(d.read()).split('時間=')
-        sec = 0
-        for i in range(1, 5):
-            d3 = d2[i].split('ms TTL')
-            sec += int(d3[0])
-        await ctx.send('網路延遲：'+ str(sec / 4) + '毫秒')
+        #os.popen("ping -c 1 google.com")
+        #d = os.popen("ping google.com")
+        #d2 = str(d.read()).split('時間=')
+        #sec = 0
+        #for i in range(1, 5):
+        #    d3 = d2[i].split('ms TTL')
+        #    sec += int(d3[0])
+        #await ctx.send('網路延遲：'+ str(sec / 4) + '毫秒')
 
     @commands.command()
     async def ran(self,ctx):
