@@ -42,9 +42,9 @@ class invite(Cog_Extension):
                         guild = self.bot.get_guild(pl.guild_id)
                         member = guild.get_member(pl.user_id)
                         channel = self.bot.get_channel(lchid)
-                        await member.move_to(channel)
                         await lmsg.delete()
                         new(0,0,0,0,0)
+                        await member.move_to(channel)
                 else:
                     await lmsg.delete()
                     new(0,0,0,0,0)
