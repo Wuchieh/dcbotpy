@@ -14,7 +14,19 @@ for i in jdata['role']:
 num = num//2
 for roleadd in range(num):
     roledata2.append(roledata[roleadd*2])
+banmsguserid =''
+def banmsg(a):
+    global banmsguserid
+    banmsguserid = a
+    return banmsguserid
+
 class Msg(Cog_Extension):
+
+    @commands.Cog.listener()
+    async def on_message(self,msg):
+        if str(msg.author.id) == str(banmsguserid):
+            await msg.delete()
+        pass
 
     @commands.command()
     async def sayd(self,ctx,*,msg):
@@ -28,6 +40,12 @@ class Msg(Cog_Extension):
         await ctx.send(msg, tts=True)
         print(str(ctx.message.author) +'說:'+ msg)
         
+    @commands.command()
+    async def banmsg(self,ctx,userid):
+        uid2 = userid.split('>')
+        uid = int((uid2[0])[-18:])
+        banmsg(uid)
+
     @commands.command()
     async def send(self,ctx,userid,*,msg):
         if '!' in userid:

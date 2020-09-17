@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import os
+import time
+
 from core.classes import Cog_Extension
 
 luid = lchid = lstat = lmsgid = lmsg = 0
@@ -12,22 +14,35 @@ def new(a,b,c,d,e):
     lmsgid = c
     lstat = d
     lmsg = e
+    if lstat == 1:
+        timer()
+    else:
+        pass
     return luid,lchid,lstat,lmsgid,lmsg
+
+def timer():
+    print('剩下5秒')
+    time.sleep(5)
+
+async def delmsg():
+    await lmsg.delete()
+    new(0,0,0,0,0)
 
 class invite(Cog_Extension):
     @commands.command()
     async def invite(self,ctx,uuid):
-        uid2 = uuid.split('>')
-        uid = int((uid2[0])[-18:])
         await ctx.message.delete()
-        member = ctx.guild.get_member(ctx.author.id)
-        user = self.bot.get_user(int(uid))
-        if str(type(member.voice.channel)) == str(discord.channel.VoiceChannel):
-            if ctx.author in member.voice.channel.members:
-                msg = await ctx.send('<@'+str(user.id) + '>是否願意進入' + str(member.voice.channel.name))
-                new(uid, member.voice.channel.id, msg.id, int('1'),msg)
-                await msg.add_reaction('✅')
-                await msg.add_reaction('❎')
+        if lstat == 0:
+            uid2 = uuid.split('>')
+            uid = int((uid2[0])[-18:])
+            member = ctx.guild.get_member(ctx.author.id)
+            user = self.bot.get_user(int(uid))
+            if str(type(member.voice.channel)) == str(discord.channel.VoiceChannel):
+                if ctx.author in member.voice.channel.members:
+                    msg = await ctx.send('<@'+str(user.id) + '>是否願意進入' + str(member.voice.channel.name) +'\n請在5秒內按下')
+                    await msg.add_reaction('✅')
+                    await msg.add_reaction('❎')
+                    new(uid, member.voice.channel.id, msg.id, int('1'),msg)
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,pl):
@@ -42,11 +57,13 @@ class invite(Cog_Extension):
                         guild = self.bot.get_guild(pl.guild_id)
                         member = guild.get_member(pl.user_id)
                         channel = self.bot.get_channel(lchid)
-                        await lmsg.delete()
+                        if str(lmsg) == '1':
+                            await lmsg.delete()
                         new(0,0,0,0,0)
                         await member.move_to(channel)
                 else:
-                    await lmsg.delete()
+                    if str(lstat) == '1':
+                        await lmsg.delete()
                     new(0,0,0,0,0)
 
 def setup(bot):
