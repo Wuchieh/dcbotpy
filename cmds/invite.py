@@ -20,13 +20,14 @@ def new(a,b,c,d,e):
         pass
     return luid,lchid,lstat,lmsgid,lmsg
 
-def timer():
-    print('剩下5秒')
-    time.sleep(5)
-
 async def delmsg():
     await lmsg.delete()
     new(0,0,0,0,0)
+
+def timer():
+    print('剩下5秒')
+    time.sleep(5)
+    delmsg()
 
 class invite(Cog_Extension):
     @commands.command()
