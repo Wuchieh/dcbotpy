@@ -30,6 +30,11 @@ async def timer():
     print('times ovet')
     await delmsg()
 
+def timer():
+    print('剩下5秒')
+    time.sleep(5)
+    delmsg()
+
 class invite(Cog_Extension):
     @commands.command()
     async def invite(self,ctx,uuid):
