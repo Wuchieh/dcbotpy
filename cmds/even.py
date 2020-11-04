@@ -78,6 +78,29 @@ class even(Cog_Extension):
                 await memb.remove_roles(role)
                 print('已移除身分組')
     
+        guild = self.bot.get_guild(pl.guild_id)
+        for releadd in range(num):
+            if str(pl.message_id) == jdata['msgid'] and str(pl.emoji) == roledata[releadd]:
+                user = guild.get_member(int(pl.user_id))
+                role = guild.get_role(int(roledata[releadd+1]))
+                await pl.member.add_roles(role)
+                print('已給予身分組')
+            if str(pl.message_id) == jdata['msgid2'] and str(pl.emoji) == roledata[releadd]:
+                role = guild.get_role(int(roledata[releadd+1]))
+                await pl.member.add_roles(role)
+                print('已給予身分組')
+
+    @commands.Cog.listener()
+    async def on_member_join(self,member):
+        if member.guild.id == int(706889259692589077):
+            guild = self.bot.get_guild(706889259692589077)
+            channel = guild.get_channel(707436532012679175)
+            #await channel.send('<@'+ str(member.id) +'>你他媽給我去看群組規定和打自我較紹唷！現在立刻馬上開始動作!!')
+            await channel.send('歡迎<@'+ str(member.id) +'>請先看一下群組規定和打一下自我介紹唷！\n記的去領取遊戲身份組唷!!')
+            role = guild.get_role(int(707439119176826880))
+            await member.add_roles(role)
+            print(member+'已加入server 並且給予了'+role.name+'身分組')
+    
 
 def setup(bot):
     bot.add_cog(even(bot))
