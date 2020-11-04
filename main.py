@@ -5,10 +5,14 @@ import random
 import os
 import keep_alive
 
+os.system("pip install --upgrade discord.py")
+
+intents = discord.Intents.all()
+
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 
-bot = commands.Bot(command_prefix=jdata['command_prefix'])
+bot = commands.Bot(command_prefix=jdata['command_prefix'],intents=intents)
 cmdpy = []
 bot.remove_command('help')
 

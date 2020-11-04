@@ -3,6 +3,9 @@ from discord.ext import commands
 from core.classes import Cog_Extension
 import json
 import os
+
+#intents = discord.Intents.all()
+
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 roledata =[]
@@ -51,28 +54,29 @@ class even(Cog_Extension):
         guild = self.bot.get_guild(pl.guild_id)
         for releadd in range(num):
             if str(pl.message_id) == jdata['msgid'] and str(pl.emoji) == roledata[releadd]:
-                print('已給予身分組')
+                user = guild.get_member(int(pl.user_id))
                 role = guild.get_role(int(roledata[releadd+1]))
                 await pl.member.add_roles(role)
+                print('已給予身分組')
             if str(pl.message_id) == jdata['msgid2'] and str(pl.emoji) == roledata[releadd]:
-                print('已給予身分組')
                 role = guild.get_role(int(roledata[releadd+1]))
                 await pl.member.add_roles(role)
+                print('已給予身分組')
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,pl):
         guild = self.bot.get_guild(pl.guild_id)
         for releadd in range(num):
             if str(pl.message_id) == jdata['msgid'] and str(pl.emoji) == roledata[releadd]:
-                print('已移除身分組')
-                user = guild.get_member(pl.user_id)
                 role = guild.get_role(int(roledata[releadd+1]))
-                await user.remove_roles(role)
+                memb = guild.get_member(pl.user_id)
+                await memb.remove_roles(role)
+                print('已移除身分組')
             if str(pl.message_id) == jdata['msgid2'] and str(pl.emoji) == roledata[releadd]:
-                print('已移除身分組')
-                user = guild.get_member(pl.user_id)
+                memb = guild.get_member(pl.user_id)
                 role = guild.get_role(int(roledata[releadd+1]))
-                await user.remove_roles(role)
+                await memb.remove_roles(role)
+                print('已移除身分組')
     
 
 def setup(bot):

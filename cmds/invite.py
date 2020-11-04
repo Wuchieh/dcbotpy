@@ -7,7 +7,7 @@ from core.classes import Cog_Extension
 
 luid = lchid = lstat = lmsgid = lmsg = 0
 
-def new(a,b,c,d,e):
+async def new(a,b,c,d,e):
     global luid,lchid,lstat,lmsgid,lmsg
     luid = a
     lchid = b
@@ -15,18 +15,20 @@ def new(a,b,c,d,e):
     lstat = d
     lmsg = e
     if lstat == 1:
-        timer()
+        await timer()
     else:
         pass
     return luid,lchid,lstat,lmsgid,lmsg
 
-def timer():
-    print('剩下5秒')
-    time.sleep(5)
-
 async def delmsg():
     await lmsg.delete()
-    new(0,0,0,0,0)
+    await new(0,0,0,0,0)
+
+async def timer():
+    print('剩下5秒')
+    time.sleep(5)
+    print('times ovet')
+    await delmsg()
 
 class invite(Cog_Extension):
     @commands.command()
@@ -42,7 +44,7 @@ class invite(Cog_Extension):
                     msg = await ctx.send('<@'+str(user.id) + '>是否願意進入' + str(member.voice.channel.name) +'\n請在5秒內按下')
                     await msg.add_reaction('✅')
                     await msg.add_reaction('❎')
-                    new(uid, member.voice.channel.id, msg.id, int('1'),msg)
+                    await new(uid, member.voice.channel.id, msg.id, int('1'),msg)
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,pl):
@@ -59,12 +61,12 @@ class invite(Cog_Extension):
                         channel = self.bot.get_channel(lchid)
                         if str(lmsg) == '1':
                             await lmsg.delete()
-                        new(0,0,0,0,0)
+                        await new(0,0,0,0,0)
                         await member.move_to(channel)
                 else:
                     if str(lstat) == '1':
                         await lmsg.delete()
-                    new(0,0,0,0,0)
+                    await new(0,0,0,0,0)
 
 def setup(bot):
     bot.add_cog(invite(bot))
