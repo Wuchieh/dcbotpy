@@ -19,7 +19,7 @@ bot.remove_command('help')
 @bot.group()
 async def help(ctx):
     await ctx.send('```css\n'+str(jdata['command_prefix'])+'ping 顯示機器人延遲\n'
-    +str(jdata['command_prefix'])+'ran 骰子遊戲\n'
+    +str(jdata['command_prefix'])+'ran 骰子遊戲1~10\n'
     +str(jdata['command_prefix'])+'clear [num] 刪除指定數量的聊天內容\n'
     +str(jdata['command_prefix'])+'sayd [msg] 使機器人說話\n'
     +str(jdata['command_prefix'])+'member 顯示伺服器中所有人的狀態\n'
