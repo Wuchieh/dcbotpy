@@ -46,6 +46,7 @@ class onoff(Cog_Extension):
     async def offline(self,ctx):
         memberlist = ctx.guild.members
         offlineidlist = []
+        print(memberlist)
         for i in memberlist:
             if str(i.status) == "offline":
                 offlineidlist.append(i.id)

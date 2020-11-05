@@ -5,15 +5,15 @@ import json
 import os
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
-roledata =[]
-roledata2 =[]
-num = 0
-for i in jdata['role']:
-    num+=1
-    roledata.append(i)
-num = num//2
-for roleadd in range(num):
-    roledata2.append(roledata[roleadd*2])
+#roledata =[]
+#roledata2 =[]
+#num = 0
+#for i in jdata['role']:
+#    num+=1
+#    roledata.append(i)
+#num = num//2
+#for roleadd in range(num):
+#    roledata2.append(roledata[roleadd*2])
 banmsguserid =''
 def banmsg(a):
     global banmsguserid
@@ -67,26 +67,9 @@ class Msg(Cog_Extension):
     @commands.command()
     async def 身分組(self,ctx):
         await ctx.message.delete()
-        emoji=['750374968864276570','750374967786471466','750374968113496123','750374968407097384','750374968105238630']
-        msg = await ctx.send('<:lol:750374968864276570>  : 英雄聯盟（League of Legends）\n\n'
-        '<:GTA:750374967786471466>  : 俠盜獵車手系列（Grand Theft Auto 1~5）\n\n'
-        '<:R6:750374968113496123>  : 虹彩六號（Rainbow Six Siege）\n\n'
-        '<:pubg:750374968407097384>  : 絕地求生（PlayerUnknown'+"jdata['ss']"+'s Battlegrounds）\n\n'
-        '<:VALORANT:750374968105238630>  : 特戰英豪／瓦羅蘭（VALORANT）')
-        for i in emoji:
-            bemoji = self.bot.get_emoji(int(i))
-            await msg.add_reaction(bemoji)
-
-    @commands.command()
-    async def 身分組2(self,ctx):
-        await ctx.message.delete()
-        emoji=['752543133988028469','752363812329488384','752363837260562472','752529033006153778','752543133706748036','752561204186054686']
-        msg = await ctx.send('<:Warframe:752543133988028469>  : 戰甲神兵（Warframe）\n\n'
-        '<:TheDivision:752363812329488384>  : 全境封鎖（The Division ™）\n\n'
-        '<:TheDivision2:752363837260562472>   : 全境封鎖2（The Division 2®）\n\n'
-        '<:Minecraft:752529033006153778>   : 當個創世神（Minecraft）\n\n'
-        '<:Fallguys:752543133706748036>   : 糖豆人（Fall Guys）\n\n'
-        '<:L4D2:752561204186054686> : 惡靈勢力2（Left 4 Dead 2）')
+        emoji=['750374968864276570','750374967786471466','750374968113496123','750374968407097384','750374968105238630','752561204186054686','752363837260562472','752543133988028469','752529033006153778','752543133706748036','773559447954915338','773559314169593896','775051504968400957']
+        msg = await ctx.send("<:lol:750374968864276570> ： <@&775041162645864481>\n<:GTA:750374967786471466> ： <@&775049972663451650>\n<:R6:750374968113496123> ： <@&775050130360893500>\n<:pubg:750374968407097384> ： <@&775050314885365840>\n<:VALORANT:750374968105238630> ： <@&775050478400176178>\n<:L4D2:752561204186054686> ： <@&775050635497963530>\n<:TheDivision2:752363837260562472> ： <@&775050758608388097>\n<:Warframe:752543133988028469> ： <@&775050821641044038>\n<:Minecraft:752529033006153778> ： <@&775050825659711499>\n<:Fallguys:752543133706748036> ： <@&775050954755014729>\n<:ArenaOfValor:773559447954915338> ： <@&775050955347066891>\n<:ApexLegend:773559314169593896> ： <@&775050956056428595>\n<:among:775051504968400957> ： <@&775051174020644885>")
+        print(msg.id)
         for i in emoji:
             bemoji = self.bot.get_emoji(int(i))
             await msg.add_reaction(bemoji)

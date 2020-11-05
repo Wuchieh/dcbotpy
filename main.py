@@ -18,20 +18,23 @@ bot.remove_command('help')
 
 @bot.group()
 async def help(ctx):
-    await ctx.send('```css\n'+str(jdata['command_prefix'])+'ping 顯示機器人延遲\n'
-    +str(jdata['command_prefix'])+'ran 骰子遊戲\n'
+    await ctx.send('```css\n'
+    +str(jdata['command_prefix'])+'ping 顯示機器人延遲\n'
+    +str(jdata['command_prefix'])+'ran 骰子遊戲1~10\n'
     +str(jdata['command_prefix'])+'clear [num] 刪除指定數量的聊天內容\n'
     +str(jdata['command_prefix'])+'sayd [msg] 使機器人說話\n'
     +str(jdata['command_prefix'])+'member 顯示伺服器中所有人的狀態\n'
     +str(jdata['command_prefix'])+'offline 顯示離線名單\n'
     +str(jdata['command_prefix'])+'online 顯示上線名單\n'
-    +str(jdata['command_prefix'])+'user 顯示個人訊息\n'
-    +str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道```')
+    +str(jdata['command_prefix'])+'user 顯示個人訊息(管理員Debug用)\n'
+    #+str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道'
+    +'```')
 
 @bot.event
 async def on_ready():
     bot.unload_extension(F'cmds.cmds')
     bot.unload_extension(F'cmds.test')
+    bot.unload_extension(F'cmds.invite')
     print('>>bot is online')
 
 @bot.command()
