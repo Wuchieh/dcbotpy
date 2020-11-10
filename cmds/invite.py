@@ -2,8 +2,8 @@ import discord
 from discord.ext import commands
 import os
 import asyncio
-from datetime import datetime
-from threading import Timer
+from threading import Thread
+from time import sleep
 from core.classes import Cog_Extension
 
 time = overtime= luid = lchid = lstat = lmsgid = lmsg = 0
@@ -11,6 +11,13 @@ time = overtime= luid = lchid = lstat = lmsgid = lmsg = 0
 #def time2(inc):
 #        t = Timer(inc, printTime, (inc,))
 #        t.start()
+
+def file_write(file_input, num_lines):
+    print('a')
+    sleep(5)
+    print('b')
+    return 0
+
 async def new(a,b,c,d,e):
     global luid,lchid,lstat,lmsgid,lmsg,time,overtime
     luid = a #使用者ID
@@ -18,10 +25,14 @@ async def new(a,b,c,d,e):
     lmsgid = c #訊息ID
     lstat = d #指令狀態
     lmsg = e #訊息
-
     if lstat == 1: #判斷狀態和開始計時
-        
+        #overtime = time + 3
+        curr_thread = Thread(target=file_write, args=("Norah", range(5)))
+        curr_thread.daemon = False
+        print(curr_thread.start())
+        print('123')
     else:
+        overtime = 0 #設定結束時間
         pass
     
     return luid,lchid,lstat,lmsgid,lmsg,overtime,time

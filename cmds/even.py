@@ -70,9 +70,10 @@ class even(Cog_Extension):
             if str(pl.message_id) == jdata['msgid'] and str(pl.emoji) == roledata[releadd]:
                 role = guild.get_role(int(roledata[releadd+1]))
                 memb = guild.get_member(pl.user_id)
+                print(str(role)+str(memb))
                 await memb.remove_roles(role)
                 print('已移除'+str(memb)+' 的 '+str(role)+'身分組')
-
+"""
     @commands.Cog.listener()
     async def on_member_join(self,member):
         if member.guild.id == int(706889259692589077):
@@ -91,7 +92,7 @@ class even(Cog_Extension):
             channel = guild.get_channel(775054433213612073)
             a=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             await channel.send(a+' '+str(member)+' 已被貶至人間煉獄 永世不得超生')
-    
+"""    
 
 def setup(bot):
     bot.add_cog(even(bot))

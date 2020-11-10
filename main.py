@@ -27,6 +27,8 @@ async def help(ctx):
     +str(jdata['command_prefix'])+'offline 顯示離線名單\n'
     +str(jdata['command_prefix'])+'online 顯示上線名單\n'
     +str(jdata['command_prefix'])+'user 顯示個人訊息(管理員Debug用)\n'
+    +str(jdata['command_prefix'])+'color [red(紅),green(綠),blue(藍),clean(清除)]\n'
+    +str(jdata['command_prefix'])+'ms 開始踩地雷遊戲 請找管理員開啟\n'
     #+str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道'
     +'```')
 
