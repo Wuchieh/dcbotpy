@@ -4,7 +4,7 @@ from core.classes import Cog_Extension
 import os
 import json
 
-rolesid = [775585310951342082,775585420968460288,775585536462946325]
+rolesid = [775585310951342082,775752050503843890,775585536462946325]
 
 class color(Cog_Extension):
     @commands.group()
@@ -41,7 +41,7 @@ class color(Cog_Extension):
     @color.command()
     async def blue(self,ctx):
         guild = self.bot.get_guild(ctx.message.guild.id)
-        adrole = guild.get_role(775585420968460288)
+        adrole = guild.get_role(775752050503843890)
         member = guild.get_member(ctx.author.id)
         await member.add_roles(adrole)
         rolesid.remove(adrole.id)
