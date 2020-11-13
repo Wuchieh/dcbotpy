@@ -55,14 +55,14 @@ class aabb(Cog_Extension):
                 if len(ans[1]) == 4 and isinstance(int(ans[1]),int):
                     if jud(int(ans[1])):
                         if gamejud(int(ans[1])) == '4a0b':
-                            await ctx.send(gamejud(int(ans[1])) + ' 遊戲結束\n'+'勝者<@'+str(ctx.author.id)+'>')
+                            await ctx.send(str(ans[1]) +' - '+gamejud(int(ans[1])) + ' 遊戲結束\n'+'勝者<@'+str(ctx.author.id)+'>')
                             global aabbans,aabblist
                             stat = 0
                             aabbans = ''
                             aabblist = []
                             return stat,aabbans,aabblist
                         else:
-                            await ctx.send(gamejud(int(ans[1])))
+                            await ctx.send(str(ans[1]) +" - "+ gamejud(int(ans[1])))
                     else:
                         await ctx.send('請輸入4個數字 並且不重複')
                 else:
@@ -87,7 +87,7 @@ class aabb(Cog_Extension):
         global aabbans,aabblist
         time = 0
         #aabblist = []
-        a = random.randint(1,9)
+        a = random.randint(0,9)
         aabblist.append(a)
         while time < 3:
             time += 1
