@@ -73,18 +73,18 @@ class even(Cog_Extension):
                 print(str(role)+str(memb))
                 await memb.remove_roles(role)
                 print('已移除'+str(memb)+' 的 '+str(role)+'身分組')
-"""
+#"""
     @commands.Cog.listener()
     async def on_member_join(self,member):
         if member.guild.id == int(706889259692589077):
             guild = self.bot.get_guild(706889259692589077)
-            channel = guild.get_channel(775054378540859434)
+            #channel = guild.get_channel(775054378540859434)
             #await channel.send('<@'+ str(member.id) +'>你他媽給我去看群組規定和打自我較紹唷！現在立刻馬上開始動作!!')
-            await channel.send('歡迎<@'+ str(member.id) +'>請先看一下群組規定和打一下自我介紹唷！\n記的去<#775054344227651584>領取遊戲身份組唷!!')
+            #await channel.send('歡迎<@'+ str(member.id) +'>請先看一下群組規定和打一下自我介紹唷！\n記的去<#775054344227651584>領取遊戲身份組唷!!')
             role = guild.get_role(int(707439119176826880))
             await member.add_roles(role)
             print(str(member)+'已加入server 並且給予了'+role.name+'身分組')
-    
+"""    
     @commands.Cog.listener()
     async def on_member_remove(self,member):
         if member.guild.id == int(706889259692589077):

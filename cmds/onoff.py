@@ -24,7 +24,7 @@ class onoff(Cog_Extension):
         for offid in offlineidlist:
             msg = msg + '<@' + str(offid) + '>\n'
 
-        await ctx.send(msg)
+        await ctx.send(str(msg))
         print('\n========online========\n')
         for i2 in onlinelist:
             print(i2)

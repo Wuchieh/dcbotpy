@@ -5,15 +5,6 @@ import json
 import os
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
-#roledata =[]
-#roledata2 =[]
-#num = 0
-#for i in jdata['role']:
-#    num+=1
-#    roledata.append(i)
-#num = num//2
-#for roleadd in range(num):
-#    roledata2.append(roledata[roleadd*2])
 banmsguserid =''
 def banmsg(a):
     global banmsguserid
@@ -33,6 +24,15 @@ class Msg(Cog_Extension):
         await ctx.message.delete()
         await ctx.send(msg)
         print(str(ctx.message.author) +'說:'+ msg)
+    
+    @commands.command()
+    async def edit(self,ctx,msgid,*,remsg):
+        if ctx.author.id == int(jdata['owner']):
+            await ctx.message.delete()
+            guild = self.bot.get_guild(ctx.message.guild.id)
+            channel = guild.get_channel(ctx.message.channel.id)
+            msg = await channel.fetch_message(msgid)
+            await msg.edit(content=remsg)
     
     @commands.command()
     async def tts(self,ctx,*,msg):

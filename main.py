@@ -27,8 +27,8 @@ async def help(ctx):
     +str(jdata['command_prefix'])+'offline 顯示離線名單\n'
     +str(jdata['command_prefix'])+'online 顯示上線名單\n'
     +str(jdata['command_prefix'])+'user 顯示個人訊息(管理員Debug用)\n'
-    +str(jdata['command_prefix'])+'color [red(紅),green(綠),blue(藍),clean(清除)]\n'
     +str(jdata['command_prefix'])+'ms 開始踩地雷遊戲 請找管理員開啟\n'
+    +str(jdata['command_prefix'])+'color help 顏色修改提示\n'
     +str(jdata['command_prefix'])+'aabb help 顯示AABB遊戲提示\n'
     #+str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道'
     +'```')
@@ -42,21 +42,25 @@ async def on_ready():
 
 @bot.command()
 async def load(ctx, extension):
-    bot.load_extension(F'cmds.{extension}')
-    await ctx.send(F'已加載 {extension}')
-    print(F'\n---------------------------------\n已加載 {extension}\n---------------------------------\n')
+    print
+    if ctx.author.id == int(jdata['owner']):
+        bot.load_extension(F'cmds.{extension}')
+        await ctx.send(F'已加載 {extension}')
+        print(F'\n---------------------------------\n已加載 {extension}\n---------------------------------\n')
 
 @bot.command()
 async def unload(ctx, extension):
-    bot.unload_extension(F'cmds.{extension}')
-    await ctx.send(F'已卸載 {extension}')
-    print(F'\n---------------------------------\n已卸載 {extension}\n---------------------------------\n')
+    if ctx.author.id == int(jdata['owner']):
+        bot.unload_extension(F'cmds.{extension}')
+        await ctx.send(F'已卸載 {extension}')
+        print(F'\n---------------------------------\n已卸載 {extension}\n---------------------------------\n')
 
 @bot.command()
 async def reload(ctx, extension):
-    bot.reload_extension(F'cmds.{extension}')
-    await ctx.send(F'已重新加載 {extension}')
-    print(F'\n---------------------------------\n已重新加載 {extension}\n---------------------------------\n')
+    if ctx.author.id == int(jdata['owner']):
+        bot.reload_extension(F'cmds.{extension}')
+        await ctx.send(F'已重新加載 {extension}')
+        print(F'\n---------------------------------\n已重新加載 {extension}\n---------------------------------\n')
 
 @bot.group()
 async def user(ctx):

@@ -42,7 +42,7 @@ def gamejud(num):
     for i in set3:
         if i in aabblist:
             BB += 1
-    return (str(AA)+'a'+str(BB)+'b')
+    return (str(AA)+'A'+str(BB)+'B')
 
 class aabb(Cog_Extension):
     @commands.group()
@@ -54,7 +54,7 @@ class aabb(Cog_Extension):
             if str.isdigit(ans[1]):
                 if len(ans[1]) == 4 and isinstance(int(ans[1]),int):
                     if jud(int(ans[1])):
-                        if gamejud(int(ans[1])) == '4a0b':
+                        if gamejud(int(ans[1])) == '4A0B':
                             await ctx.send(str(ans[1]) +' - '+gamejud(int(ans[1])) + ' 遊戲結束\n'+'勝者<@'+str(ctx.author.id)+'>')
                             global aabbans,aabblist
                             stat = 0
@@ -62,7 +62,7 @@ class aabb(Cog_Extension):
                             aabblist = []
                             return stat,aabbans,aabblist
                         else:
-                            await ctx.send(str(ans[1]) +" - "+ gamejud(int(ans[1])))
+                            await ctx.send(str(ans[1]) +" - "+ gamejud(int(ans[1])) +' - '+ctx.author.name)
                     else:
                         await ctx.send('請輸入4個數字 並且不重複')
                 else:
@@ -129,7 +129,7 @@ class aabb(Cog_Extension):
         +'  '+str(jdata['command_prefix'])+'aabb reset　重置遊戲並顯示上局答案\n'
         +'  當遊戲開始後輸入 '+str(jdata['command_prefix'])+'aabb [數字] 即可遊玩\n'
         +'AABB規則：\n'
-        +'  輸入4位數字 \n'
+        +'  ,aabb 輸入4位數字 \n'
         +'  若答案中有此數字且位子正確即為A\n'
         +'  若答案中有此數字但位子錯誤即為B\n'
         +'ex：\n'
@@ -139,14 +139,15 @@ class aabb(Cog_Extension):
         +'  輸入　3461 = 1A1B\n'
         +'```')
         
-'''
+
     @aabb.command()
     async def ans(self,ctx):
-        if aabbans == '':
-            await ctx.send('遊戲尚未開始')
-            return
-        await ctx.send(str(aabbans))
-'''
+        if str(ctx.author.id) == jdata['owner']:
+            if aabbans == '':
+                await ctx.send('遊戲尚未開始')
+                return
+            await ctx.send(str(aabbans))
+
 
 def setup(bot):
     bot.add_cog(aabb(bot))
