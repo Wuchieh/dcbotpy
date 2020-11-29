@@ -4,7 +4,13 @@ import json
 from discord.ext import commands
 from core.classes import Cog_Extension
 import random
-
+from threading import Timer
+a=0
+def time(tim):
+    global a
+    a+=1
+    t=Timer(tim,time,args=(tim,))
+    t.start()
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 
@@ -12,8 +18,9 @@ class Main(Cog_Extension):
 
     @commands.command()
     async def ping(self,ctx):
-        await ctx.send(F'{round(self.bot.latency*1000)} 毫秒')
-        os.popen("ping -c 1 google.com")
+        global a
+        await ctx.send(F'{round(self.bot.latency*1000)} 毫秒\n{a}')
+        #os.popen("ping -c 1 google.com")
         #d = os.popen("ping google.com")
         #d2 = str(d.read()).split('時間=')
         #sec = 0
@@ -62,3 +69,4 @@ class Main(Cog_Extension):
 
 def setup(bot):
     bot.add_cog(Main(bot))
+    time(int(1))

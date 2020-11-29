@@ -19,16 +19,9 @@ class lottery(Cog_Extension):
             msg = await ctx.send(embed=embed)
             await msg.add_reaction('💰')
     
-    '''@commands.command()
-    async def lotterytest(self,ctx,em):
-        if len(em)<2:
-            await msg.add_reaction(em)
-        else:
-            emoji = self.bot.get_emoji(int(((em.split('>'))[0])[-18:]))
-            await msg.add_reaction(emoji)'''
 
     @commands.command()
-    async def lotest(self,ctx,msgid):
+    async def lotend(self,ctx,msgid):
         if str(ctx.author.id) == jdata['owner']:
             member = ['667984215282941962','508994841632440332','631823065067552769'] #中獎率加倍
             msg = await ctx.message.channel.fetch_message(msgid)

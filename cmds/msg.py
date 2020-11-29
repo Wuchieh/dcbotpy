@@ -5,25 +5,34 @@ import json
 import os
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
-banmsguserid =''
-def banmsg(a):
-    global banmsguserid
-    banmsguserid = a
-    return banmsguserid
+banmsguserid = []
 
 class Msg(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_message(self,msg):
-        if str(msg.author.id) == str(banmsguserid):
+      try:
+        if msg.author.id in banmsguserid:
             await msg.delete()
+      except discord.errors.NotFound:
         pass
 
     @commands.command()
-    async def sayd(self,ctx,*,msg):
-        await ctx.message.delete()
-        await ctx.send(msg)
-        print(str(ctx.message.author) +'說:'+ msg)
+    async def sayd(self,ctx):
+        #await ctx.message.delete()
+        #await ctx.send(msg)
+        #print(str(ctx.message.author) +'說:'+ msg)
+        msg = ctx.message.content.split(',sayd ')
+        message = ''
+        for i in msg:
+            if i == ',sayd':
+                pass
+            else:
+                message = ' '+i
+        if message == '':
+            await ctx.send(str(jdata['command_prefix'])+'sayd [msg] 使機器人說話')
+        else:
+            await ctx.send(message)
     
     @commands.command()
     async def edit(self,ctx,msgid,*,remsg):
@@ -43,13 +52,27 @@ class Msg(Cog_Extension):
     @commands.command()
     async def banmsg(self,ctx,userid):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
+            global banmsguserid
             await ctx.message.delete()
             uid2 = userid.split('>')
             uid = int((uid2[0])[-18:])
-            banmsg(uid)
+            banmsguserid.append(uid)
         else:
             await ctx.send('權限不足 本指令只提供給伺服器傭有者 \n本伺服器傭有者為 <@' + str(ctx.guild.owner_id) + '>')
-
+        
+    @commands.command()
+    async def unbanmsg(self,ctx,userid):
+        if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
+            await ctx.message.delete()
+            uid2 = userid.split('>')
+            uid = int((uid2[0])[-18:])
+            global banmsguserid
+            if uid in banmsguserid:
+                banmsguserid.remove(uid)
+            else:
+                await ctx.send('此人尚未被BanMsg')
+        else:
+            await ctx.send('權限不足 本指令只提供給伺服器傭有者 \n本伺服器傭有者為 <@' + str(ctx.guild.owner_id) + '>')
     @commands.command()
     async def send(self,ctx,userid,*,msg):
         if '!' in userid:
@@ -73,6 +96,18 @@ class Msg(Cog_Extension):
         for i in emoji:
             bemoji = self.bot.get_emoji(int(i))
             await msg.add_reaction(bemoji)
+
+    
+    @commands.command()
+    async def emmsg(self,ctx,msgid,em):
+        msg = await ctx.message.channel.fetch_message(int(msgid))
+        print(msg.content)
+        await ctx.message.delete()
+        if len(em)<18:
+            await msg.add_reaction(em)
+        else:
+            emoji = self.bot.get_emoji(int(((em.split('>'))[0])[-18:]))
+            await msg.add_reaction(emoji)
 
     @commands.command()
     async def clear(self,ctx,num:int):

@@ -19,6 +19,8 @@ class even(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_message(self,msg):
+        if msg.author.id == 528227414678044672 and msg.content == 'Boo':
+            await msg.channel.send('boom')
         if str(msg.channel.type) == 'private' and msg.author != self.bot.user:
             user = self.bot.get_user(int(490201803661508630))
             user2 = self.bot.get_user(int(jdata['owner']))
@@ -40,8 +42,6 @@ class even(Cog_Extension):
         if str(msg.content) == '早' and msg.author != self.bot.user:
             await msg.add_reaction('👍')
             await msg.channel.send(str(msg.author)+' 早呀')
-        #if msg.author.id == 462698977331249172:
-        #    await msg.delete()
         if str(msg.channel.type) == 'private' and msg.author != self.bot.user:
             print(str(msg.author) + '說:' + msg.content)
         else:

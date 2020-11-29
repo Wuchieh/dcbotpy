@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import json
+import requests
+import asyncio
 import random
 import os
 import keep_alive
@@ -23,9 +25,9 @@ async def help(ctx):
     +str(jdata['command_prefix'])+'ran 骰子遊戲1~10\n'
     +str(jdata['command_prefix'])+'clear [num] 刪除指定數量的聊天內容\n'
     +str(jdata['command_prefix'])+'sayd [msg] 使機器人說話\n'
-    +str(jdata['command_prefix'])+'member 顯示伺服器中所有人的狀態\n'
-    +str(jdata['command_prefix'])+'offline 顯示離線名單\n'
-    +str(jdata['command_prefix'])+'online 顯示上線名單\n'
+    #+str(jdata['command_prefix'])+'member 顯示伺服器中所有人的狀態\n'
+    #+str(jdata['command_prefix'])+'offline 顯示離線名單\n'
+    #+str(jdata['command_prefix'])+'online 顯示上線名單\n'
     +str(jdata['command_prefix'])+'user 顯示個人訊息(管理員Debug用)\n'
     +str(jdata['command_prefix'])+'ms 開始踩地雷遊戲 請找管理員開啟\n'
     +str(jdata['command_prefix'])+'color help 顏色修改提示\n'
@@ -37,8 +39,11 @@ async def help(ctx):
 async def on_ready():
     bot.unload_extension(F'cmds.cmds')
     bot.unload_extension(F'cmds.test')
-    bot.unload_extension(F'cmds.invite')
+    #bot.unload_extension(F'cmds.invite')
     print('>>bot is online')
+    while(1):
+      requests.get(">Repl.it Python Project Web URL<")
+      await asyncio.sleep(10)
 
 @bot.command()
 async def load(ctx, extension):
@@ -89,8 +94,9 @@ async def showpy(ctx):
 
 @bot.command()
 async def disconnect(ctx):
-    await ctx.send('機器人已關閉')
-    await bot.close()
+    if ctx.author.id == int(jdata['owner']):
+        await ctx.send('機器人已關閉')
+        await bot.close()
 
 @bot.event
 async def on_disconnect():

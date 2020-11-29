@@ -53,12 +53,14 @@ class logup(Cog_Extension):
                 if i == int(index):
                     print(loglist[a+1]+'\n')
                     fileurl = 'log/'+loglist[a+1]
-                    #fileurl = 'D:\VS code\dcbotpy\log\❦⋟天上✰仙境⋞❦-機器人設定.txt'
                     print(fileurl+'\n')
                     await asyncio. sleep(1)
                     upfile = discord.File(F'{fileurl}')
                     await ctx.send(file = upfile)
                 a+=1
+
+
+                
 
 def setup(bot):
     bot.add_cog(logup(bot))
