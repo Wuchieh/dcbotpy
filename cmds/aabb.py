@@ -100,6 +100,8 @@ class aabb(Cog_Extension):
         print(aabbans)
         stat = 1
         await ctx.send('AABB遊戲開始')
+        user = self.bot.get_user(int(jdata['owner']))
+        await user.send(str(aabbans))
         return aabbans,stat,aabblist
 
     @aabb.command()

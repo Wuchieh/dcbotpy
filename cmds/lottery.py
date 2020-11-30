@@ -23,7 +23,7 @@ class lottery(Cog_Extension):
     @commands.command()
     async def lotend(self,ctx,msgid):
         if str(ctx.author.id) == jdata['owner']:
-            member = ['667984215282941962','508994841632440332','631823065067552769'] #中獎率加倍
+            member = ['581794418764415020','416213146408189952','225605610022895616','631823065067552769','667984215282941962','457924239627124736'] #中獎率加倍
             msg = await ctx.message.channel.fetch_message(msgid)
             msgreaction = msg.reactions
             for i in msgreaction:

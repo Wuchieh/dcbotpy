@@ -7,6 +7,9 @@ import random
 import os
 import keep_alive
 
+keeptime = 10
+keepstatus = 1
+
 os.system("pip install --upgrade discord.py")
 
 intents = discord.Intents.all()
@@ -39,15 +42,15 @@ async def help(ctx):
 async def on_ready():
     bot.unload_extension(F'cmds.cmds')
     bot.unload_extension(F'cmds.test')
-    #bot.unload_extension(F'cmds.invite')
     print('>>bot is online')
     while(1):
-      requests.get(">Repl.it Python Project Web URL<")
-      await asyncio.sleep(10)
+        await asyncio.sleep(keeptime)
+        if keepstatus == 1:
+            requests.get("http://127.0.0.1:8080/")
+        
 
 @bot.command()
 async def load(ctx, extension):
-    print
     if ctx.author.id == int(jdata['owner']):
         bot.load_extension(F'cmds.{extension}')
         await ctx.send(F'已加載 {extension}')
@@ -66,6 +69,24 @@ async def reload(ctx, extension):
         bot.reload_extension(F'cmds.{extension}')
         await ctx.send(F'已重新加載 {extension}')
         print(F'\n---------------------------------\n已重新加載 {extension}\n---------------------------------\n')
+
+@bot.command()
+async def keep(ctx,type,index):
+    global keepstatus,keeptime
+    if type == 'status':
+        if index == '1':
+            print('已啟用保持連線')
+        elif index == '0':
+            print('已關閉保持連線')
+        else:
+            print('請輸入1或0')
+            return
+        keepstatus = int(index)
+    if type == 'time':
+        if index.isdigit():
+            keeptime = int(index)
+        else:
+            print('請輸入數字')
 
 @bot.group()
 async def user(ctx):

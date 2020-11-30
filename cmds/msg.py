@@ -19,13 +19,11 @@ class Msg(Cog_Extension):
 
     @commands.command()
     async def sayd(self,ctx):
-        #await ctx.message.delete()
-        #await ctx.send(msg)
-        #print(str(ctx.message.author) +'說:'+ msg)
-        msg = ctx.message.content.split(',sayd ')
+        pd = str(jdata['command_prefix'])+'sayd'
+        msg = ctx.message.content.split(pd+' ')
         message = ''
         for i in msg:
-            if i == ',sayd':
+            if i == pd:
                 pass
             else:
                 message = ' '+i
