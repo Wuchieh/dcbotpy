@@ -20,14 +20,14 @@ class Main(Cog_Extension):
     async def ping(self,ctx):
         global a
         await ctx.send(F'{round(self.bot.latency*1000)} 毫秒\n{a}')
-        #os.popen("ping -c 1 google.com")
-        #d = os.popen("ping google.com")
-        #d2 = str(d.read()).split('時間=')
-        #sec = 0
-        #for i in range(1, 5):
-        #    d3 = d2[i].split('ms TTL')
-        #    sec += int(d3[0])
-        #await ctx.send('網路延遲：'+ str(sec / 4) + '毫秒')
+        '''os.popen("ping -c 1 google.com")
+        d = os.popen("ping google.com")
+        d2 = str(d.read()).split('時間=')
+        sec = 0
+        for i in range(1, 5):
+            d3 = d2[i].split('ms TTL')
+            sec += int(d3[0])
+        await ctx.send('網路延遲：'+ str(sec / 4) + '毫秒')'''
 
     @commands.command()
     async def ran(self,ctx):
@@ -48,6 +48,17 @@ class Main(Cog_Extension):
       if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
         member = ctx.guild.get_member(int(id))
         await member.kick(reason=r)
+
+    @commands.command()
+    async def avatar(self,ctx,userid:str='0'):
+        uid2 = userid.split('>')
+        uid = int((uid2[0])[-18:])
+        user = self.bot.get_user(int(uid))
+        if user == None:
+            await ctx.send('找不到指定用戶')
+        else:
+            asset = user.avatar_url
+            await ctx.send(str(asset))
 
     @commands.command()
     async def move(self,ctx,id):

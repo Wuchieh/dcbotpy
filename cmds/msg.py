@@ -19,6 +19,7 @@ class Msg(Cog_Extension):
 
     @commands.command()
     async def sayd(self,ctx):
+        await ctx.message.delete()
         pd = str(jdata['command_prefix'])+'sayd'
         msg = ctx.message.content.split(pd+' ')
         message = ''

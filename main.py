@@ -35,6 +35,7 @@ async def help(ctx):
     +str(jdata['command_prefix'])+'ms 開始踩地雷遊戲 請找管理員開啟\n'
     +str(jdata['command_prefix'])+'color help 顏色修改提示\n'
     +str(jdata['command_prefix'])+'aabb help 顯示AABB遊戲提示\n'
+    +str(jdata['command_prefix'])+'math [整數20~50] 開始math遊戲\n'
     #+str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道'
     +'```')
 
@@ -121,6 +122,7 @@ async def disconnect(ctx):
 
 @bot.event
 async def on_disconnect():
+    requests.get("http://127.0.0.1:8080/")
     print('機器人已關閉')
 
 
