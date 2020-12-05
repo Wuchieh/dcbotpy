@@ -6,16 +6,41 @@ import os
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 banmsguserid = []
-
+onMessageUser = int()
+def chonMessageUser(a):
+    global onMessageUser
+    onMessageUser = a
 class Msg(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_message(self,msg):
-      try:
-        if msg.author.id in banmsguserid:
-            await msg.delete()
-      except discord.errors.NotFound:
+        try:
+            if msg.author.id in banmsguserid:
+                await msg.delete()
+        except discord.errors.NotFound:
+            pass
+        if ',setuserid' in msg.content:
+            return
+        if str(msg.channel.type) == 'private' and msg.author != self.bot.user and str(msg.author.id) != jdata['owner']:
+            user2 = self.bot.get_user(int(jdata['owner']))
+            print(msg.content)
+            if msg.author.id == onMessageUser:
+                await user2.send(str(msg.content))
+            else:
+                await user2.send(str(msg.author)+'('+str(msg.author.id)+')：\n'+str(msg.content))
+                chonMessageUser(msg.author.id)
+        if str(msg.channel.type) == 'private' and msg.author != self.bot.user and str(msg.author.id) == jdata['owner']:
+            user = self.bot.get_user(int(onMessageUser))
+            await user.send(msg.content)
         pass
+    
+    @commands.command()
+    async def setuserid(self,ctx,userid:int=0):
+        if ctx.author.id == int(jdata['owner']):
+            if userid != 0 and len(str(userid)) == 18:
+                user = self.bot.get_user(userid)
+                if user != None:
+                    chonMessageUser(int(userid))
 
     @commands.command()
     async def sayd(self,ctx):
@@ -85,7 +110,23 @@ class Msg(Cog_Extension):
             user1 = str(user[1]).split('>')
             user2 = self.bot.get_user(int(user1[0]))
             await user2.send(msg)
-    
+
+    @commands.command(aliases=['su'])
+    async def senduser(self,ctx,userid: int=0,*,msg:str='\0'):
+        if ctx.author.id == int(jdata['owner']):
+            if userid == 0:
+                pass
+            else:
+                user = self.bot.get_user(int(userid))
+                if user == None:
+                    pass
+                else:
+                    if msg == '\0':
+                        pass
+                    else:
+                        await user.send(msg)
+        pass
+
     @commands.command()
     async def 身分組(self,ctx):
         await ctx.message.delete()

@@ -6,7 +6,6 @@ import json
 import os
 
 #intents = discord.Intents.all()
-
 with open('setting.json','r',encoding='utf8') as jset:
     jdata = json.load(jset)
 roledata =[]
@@ -21,10 +20,6 @@ class even(Cog_Extension):
     async def on_message(self,msg):
         if msg.author.id == 528227414678044672 and msg.content == 'Boo':
             await msg.channel.send('boom')
-        if str(msg.channel.type) == 'private' and msg.author != self.bot.user:
-            user2 = self.bot.get_user(int(jdata['owner']))
-            print(msg.content)
-            await user2.send(str(msg.author)+':\n'+str(msg.content))
         if '<@!656761631224758282>' in str(msg.content):
             await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
         if '<@656761631224758282>' in str(msg.content):
