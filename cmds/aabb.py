@@ -10,6 +10,8 @@ with open('setting.json','r',encoding='utf8') as jset:
 stat = 0
 aabbans = ''
 aabblist = []
+aabbPasswordStatus = 0
+aabbPassword = []
 def jud(num):
     a = int(num/1000)
     b = int((num/100)%10)
@@ -43,6 +45,11 @@ def gamejud(num):
         if i in aabblist:
             BB += 1
     return (str(AA)+'A'+str(BB)+'B')
+
+def aabbPasswordGameReset():
+    global aabbPasswordStatus,aabbPassword
+    aabbPasswordStatus = 0
+    aabbPassword = []
 
 class aabb(Cog_Extension):
     @commands.group()
@@ -141,14 +148,42 @@ class aabb(Cog_Extension):
         +'  輸入　3461 = 1A1B\n'
         +'```')
         
-
     @aabb.command()
+    async def 終極密碼(self,ctx):
+        global aabbPasswordStatus,aabbPassword
+        if aabbPasswordStatus == 0:
+            aabbPasswordStatus = 1
+            rannum = random.randint(1,100)
+            print(rannum)
+            aabbPassword.append([rannum,1,100])
+            print(aabbPassword)
+            await ctx.send('終極密碼！！\n遊戲開始 範圍1~100')
+    
+    @commands.Cog.listener()
+    async def on_message(self,msg):
+        if aabbPasswordStatus == 1:
+            if msg.content.isdigit():
+                global aabbPassword
+                if int(msg.content) == aabbPassword[0][0]:
+                    await msg.channel.send('恭喜 '+str(msg.author)+' 猜對')
+                    aabbPasswordGameReset()
+                else:
+                    if int(msg.content) < aabbPassword[0][0] and int(msg.content) > aabbPassword[0][1]:
+                        aabbPassword[0][1] = int(msg.content)
+                    if int(msg.content) > aabbPassword[0][0] and int(msg.content) < aabbPassword[0][2]:
+                        aabbPassword[0][2] = int(msg.content)
+                    await msg.channel.send(str(aabbPassword[0][1])+' ~ '+str(aabbPassword[0][2]))
+                    print(aabbPassword)
+                        
+        pass
+
+    '''@aabb.command()
     async def ans(self,ctx):
         if str(ctx.author.id) == jdata['owner']:
             if aabbans == '':
                 await ctx.send('遊戲尚未開始')
                 return
-            await ctx.send(str(aabbans))
+            await ctx.send(str(aabbans))'''
 
 
 def setup(bot):

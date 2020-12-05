@@ -5,14 +5,14 @@ from discord.ext import commands
 from core.classes import Cog_Extension
 import random
 from threading import Timer
+with open('setting.json','r',encoding='utf8') as jset:
+    jdata = json.load(jset)
 a=0
 def time(tim):
     global a
     a+=1
     t=Timer(tim,time,args=(tim,))
     t.start()
-with open('setting.json','r',encoding='utf8') as jset:
-    jdata = json.load(jset)
 
 class Main(Cog_Extension):
 
