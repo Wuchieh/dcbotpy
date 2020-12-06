@@ -20,11 +20,7 @@ class even(Cog_Extension):
     async def on_message(self,msg):
         if msg.author.id == 528227414678044672 and msg.content == 'Boo':
             await msg.channel.send('boom')
-        if '<@!656761631224758282>' in str(msg.content):
-            await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
-        if '<@656761631224758282>' in str(msg.content):
-            await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
-        if '<@&656761631224758282>' in str(msg.content):
+        if self.bot.user in msg.mentions:
             await msg.add_reaction(self.bot.get_emoji(int(710157216057131028)))
         if '早安' in str(msg.content) and msg.author != self.bot.user:
             await msg.channel.send(str(msg.author)+' 早安！')

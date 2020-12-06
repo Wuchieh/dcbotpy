@@ -43,19 +43,14 @@ class Msg(Cog_Extension):
                     chonMessageUser(int(userid))
 
     @commands.command()
-    async def sayd(self,ctx):
+    async def sayd(self,ctx,*msg):
         await ctx.message.delete()
-        pd = str(jdata['command_prefix'])+'sayd'
-        msg = ctx.message.content.split(pd+' ')
-        message = ''
-        for i in msg:
-            if i == pd:
-                pass
-            else:
-                message = ' '+i
-        if message == '':
-            await ctx.send(str(jdata['command_prefix'])+'sayd [msg] 使機器人說話')
+        if msg == ():
+            pass
         else:
+            message = ''
+            for i in msg:
+                message += i+' '
             await ctx.send(message)
     
     @commands.command()
@@ -74,42 +69,22 @@ class Msg(Cog_Extension):
         print(str(ctx.message.author) +'說:'+ msg)
         
     @commands.command()
-    async def banmsg(self,ctx,userid):
+    async def banmsg(self,ctx):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
-            global banmsguserid
-            await ctx.message.delete()
-            uid2 = userid.split('>')
-            uid = int((uid2[0])[-18:])
-            banmsguserid.append(uid)
+            for i in ctx.message.mentions:
+                banmsguserid.append(i.id)
         else:
             await ctx.send('權限不足 本指令只提供給伺服器傭有者 \n本伺服器傭有者為 <@' + str(ctx.guild.owner_id) + '>')
         
     @commands.command()
-    async def unbanmsg(self,ctx,userid):
+    async def unbanmsg(self,ctx):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
-            await ctx.message.delete()
-            uid2 = userid.split('>')
-            uid = int((uid2[0])[-18:])
-            global banmsguserid
-            if uid in banmsguserid:
-                banmsguserid.remove(uid)
+            for i in ctx.message.mentions:
+                banmsguserid.remove(i.id)
             else:
                 await ctx.send('此人尚未被BanMsg')
         else:
             await ctx.send('權限不足 本指令只提供給伺服器傭有者 \n本伺服器傭有者為 <@' + str(ctx.guild.owner_id) + '>')
-    @commands.command()
-    async def send(self,ctx,userid,*,msg):
-        if '!' in userid:
-            user = str(userid).split('!')
-        else:
-            user = str(userid).split('@')
-        if str.isdigit(user[0]):
-            user2 = self.bot.get_user(int(userid))
-            await user2.send(msg)
-        else:
-            user1 = str(user[1]).split('>')
-            user2 = self.bot.get_user(int(user1[0]))
-            await user2.send(msg)
 
     @commands.command(aliases=['su'])
     async def senduser(self,ctx,userid: int=0,*,msg:str='\0'):

@@ -166,12 +166,16 @@ class aabb(Cog_Extension):
                 global aabbPassword
                 if int(msg.content) == aabbPassword[0][0]:
                     await msg.channel.send('恭喜 '+str(msg.author)+' 猜對')
+                    await msg.channel.send('https://tenor.com/view/explode-blast-blow-nuclear-boom-gif-15025770')
                     aabbPasswordGameReset()
                 else:
                     if int(msg.content) < aabbPassword[0][0] and int(msg.content) > aabbPassword[0][1]:
                         aabbPassword[0][1] = int(msg.content)
                     if int(msg.content) > aabbPassword[0][0] and int(msg.content) < aabbPassword[0][2]:
                         aabbPassword[0][2] = int(msg.content)
+                    if int(msg.content) < aabbPassword[0][1] or int(msg.content) > aabbPassword[0][2]:
+                        await msg.channel.send(str(msg.author)+'你在跟我開玩笑嗎？')
+                        return
                     await msg.channel.send(str(aabbPassword[0][1])+' ~ '+str(aabbPassword[0][2]))
                     print(aabbPassword)
                         
