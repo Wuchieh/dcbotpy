@@ -36,7 +36,7 @@ class math(Cog_Extension):
             await msg.delete()
             mathClick = 1
             gameMember.append(pl.member.id)
-            await channel.send('遊戲開始\n玩家<@'+str(gameMember[0])+'> 和 <@'+str(gameMember[1])+'>',tts=True)
+            await channel.send('遊戲開始\n玩家<@'+str(gameMember[0])+'> 和 <@'+str(gameMember[1])+'>')
             msg = await channel.send('<@'+str(gameMember[0])+'>的回合\n目前數字：'+str(gameNember))
             msgidchan(msg.id)
             await msg.add_reaction('1️⃣')
@@ -70,9 +70,9 @@ class math(Cog_Extension):
         global msgid,gameMember,gameStatus,gameNember
         await ctx.message.delete()
         if gameStatus == 0:
-            if num.isdigit():
+            if str(num).isdigit():
                 if int(num) >= 20 and int(num) <= 50 :
-                    msg = await ctx.send('玩家<@'+ str(ctx.author.id) +'>開始遊戲 挑戰者請點擊下列圖標')
+                    msg = await ctx.send('玩家<@'+ str(ctx.author.id) +'>開始遊戲math：{} \n挑戰者請點擊下列圖標'.format(num))
                     await msg.add_reaction('👊')
                     msgid = msg.id
                     gameMember.append(ctx.author.id)

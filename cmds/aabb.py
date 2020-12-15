@@ -50,6 +50,9 @@ def aabbPasswordGameReset():
     global aabbPasswordStatus,aabbPassword
     aabbPasswordStatus = 0
     aabbPassword = []
+    aabbPasswordStatus = 1
+    rannum = random.randint(1,100)
+    aabbPassword.append([rannum,1,100])
 
 class aabb(Cog_Extension):
     @commands.group()
@@ -161,7 +164,7 @@ class aabb(Cog_Extension):
     
     @commands.Cog.listener()
     async def on_message(self,msg):
-        if aabbPasswordStatus == 1:
+        if aabbPasswordStatus == 1 and msg.channel.id == 785021968415850516:
             if msg.content.isdigit():
                 global aabbPassword
                 if int(msg.content) == aabbPassword[0][0]:
@@ -172,10 +175,10 @@ class aabb(Cog_Extension):
                     if int(msg.content) <= aabbPassword[0][1] or int(msg.content) >= aabbPassword[0][2]:
                         await msg.channel.send(str(msg.author)+'你在跟我開玩笑嗎？')
                         return
-                    if int(msg.content) < aabbPassword[0][0] and int(msg.content) > aabbPassword[0][1]:
+                    elif int(msg.content) < aabbPassword[0][0] and int(msg.content) > aabbPassword[0][1]:
                         aabbPassword[0][1] = int(msg.content)
                         print('小數字已變更')
-                    if int(msg.content) > aabbPassword[0][0] and int(msg.content) < aabbPassword[0][2]:
+                    elif int(msg.content) > aabbPassword[0][0] and int(msg.content) < aabbPassword[0][2]:
                         aabbPassword[0][2] = int(msg.content)
                         print('大數字已變更')
                     await msg.channel.send(str(aabbPassword[0][1])+' ~ '+str(aabbPassword[0][2]))

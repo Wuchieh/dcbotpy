@@ -5,14 +5,14 @@ from discord.ext import commands
 from core.classes import Cog_Extension
 import random
 from threading import Timer
-with open('setting.json','r',encoding='utf8') as jset:
-    jdata = json.load(jset)
 a=0
 def time(tim):
     global a
     a+=1
     t=Timer(tim,time,args=(tim,))
     t.start()
+with open('setting.json','r',encoding='utf8') as jset:
+    jdata = json.load(jset)
 
 class Main(Cog_Extension):
 
@@ -37,7 +37,7 @@ class Main(Cog_Extension):
         print(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
       
     @commands.command()
-    async def rans(self,ctx,min,max):
+    async def rans(self,ctx,min:int=10,max:int=10):
         await ctx.message.delete()
         rannum = random.randint(int(min),int(max))
         await ctx.send(str(ctx.message.author)+' 骰出了 '+str(rannum)+'點')
@@ -51,14 +51,17 @@ class Main(Cog_Extension):
 
     @commands.command()
     async def avatar(self,ctx,userid:str='0'):
-        uid2 = userid.split('>')
-        uid = int((uid2[0])[-18:])
-        user = self.bot.get_user(int(uid))
-        if user == None:
-            await ctx.send('找不到指定用戶')
+        if str(ctx.message.author.id) == jdata['owner']:
+            uid2 = userid.split('>')
+            uid = int((uid2[0])[-18:])
+            user = self.bot.get_user(int(uid))
+            if user == None:
+                await ctx.send('找不到指定用戶')
+            else:
+                asset = user.avatar_url
+                await ctx.send(str(asset))
         else:
-            asset = user.avatar_url
-            await ctx.send(str(asset))
+          await ctx.send('權限不足')
 
     @commands.command()
     async def move(self,ctx,id):

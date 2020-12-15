@@ -47,7 +47,7 @@ async def on_ready():
     while(1):
         await asyncio.sleep(keeptime)
         if keepstatus == 1:
-            requests.get("http://127.0.0.1:8080/")
+            requests.get("https://invite.q20001116.repl.co")
         
 
 @bot.command()

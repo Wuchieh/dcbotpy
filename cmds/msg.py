@@ -72,18 +72,44 @@ class Msg(Cog_Extension):
     @commands.command()
     async def banmsg(self,ctx):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
+            await ctx.message.delete()
+            a=0
             for i in ctx.message.mentions:
-                banmsguserid.append(i.id)
+                if i.id in banmsguserid and a == 0:
+                    await ctx.send('此人已被BanMsg')
+                    a+=1
+                else:
+                    banmsguserid.append(i.id)
         else:
             await ctx.send('權限不足 本指令只提供給伺服器傭有者 \n本伺服器傭有者為 <@{}>'.format(ctx.guild.owner_id))
+
         
+    @commands.command()
+    async def banmsglist(self,ctx):
+        guild = ctx.guild
+        a=0
+        message ='```css'
+        for i in banmsguserid:
+            member = guild.get_member(i)
+            message+='\n{}'.format(member)
+            a+=1
+        message += '\n```'
+        if a == 0:
+            await ctx.send('```css\n尚未有人被BanMsg\n```')
+        else:
+            await ctx.send(message)
+
     @commands.command()
     async def unbanmsg(self,ctx):
         if ctx.message.author.id == ctx.guild.owner_id or str(ctx.message.author.id) == jdata['owner']:
+            await ctx.message.delete()
+            a=0
             for i in ctx.message.mentions:
-                banmsguserid.remove(i.id)
-            else:
-                await ctx.send('此人尚未被BanMsg')
+                if i.id not in banmsguserid and a == 0:
+                    await ctx.send('此人尚未被BanMsg')
+                    a+=1
+                else:
+                    banmsguserid.remove(i.id)
         else:
             await ctx.send('權限不足 本指令只提供給伺服器傭有者 \n本伺服器傭有者為 <@{}>'.format(ctx.guild.owner_id))
 
@@ -132,7 +158,6 @@ class Msg(Cog_Extension):
             if len(purge) >= 50 :
                 await ctx.send('https://tenor.com/view/explode-blast-blow-nuclear-boom-gif-15025770')
             print('{} ---ID {}在 << {} >> 頻道使用了clear指令刪除了{}個對話'.format(ctx.message.author,ctx.message.author.id,ctx.channel.name,len(purge)-1))
-                #print(str(ctx.message.author)+' ---ID '+str(ctx.message.author.id)+'在 << '+str(ctx.channel.name)+' >> 頻道使用了clear指令刪除了'+str(len(purge))+'個對話')
         else:
             await ctx.send('權限不足 本指令只提供給伺服器傭有者 \n本伺服器傭有者為 <@{}>'.format(ctx.guild.owner_id))
 
