@@ -53,7 +53,9 @@ class ooxx(Cog_Extension):
             channel = self.bot.get_channel(pl.channel_id)
             msg = await channel.fetch_message(pl.message_id)
             for i in msg.mentions: #index 0 to 9
+                user1 = self.bot.get_user(i.id)
                 game.append([i.id])
+            user2 = self.bot.get_user(pl.user_id)
             game[len(game)-1].append(pl.user_id)#index 1 to 10
             await msg.delete()
             message=''
@@ -69,6 +71,7 @@ class ooxx(Cog_Extension):
             game[len(game)-1].append(msg.id)#index 11
             game[len(game)-1].append(0)#index 12
             messageId.append(msg.id)
+            await channel.send('遊戲開始<@{}> VS <@{}>'.format(user1.id, user2.id))
 
         if pl.message_id in messageId and pl.user_id != self.bot.user.id:
             messageIdIndex=int()
@@ -105,14 +108,14 @@ class ooxx(Cog_Extension):
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
             elif game[messageIdIndex][3] == game[messageIdIndex][4] == game[messageIdIndex][5]:#行二
-                if game[messageIdIndex][0] =='o':
+                if game[messageIdIndex][3] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
                 else:
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][10]))
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
             elif game[messageIdIndex][6] == game[messageIdIndex][7] == game[messageIdIndex][8]:#行三
-                if game[messageIdIndex][0] =='o':
+                if game[messageIdIndex][6] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
                 else:
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][10]))
@@ -126,14 +129,14 @@ class ooxx(Cog_Extension):
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
             elif game[messageIdIndex][1] == game[messageIdIndex][4] == game[messageIdIndex][7]:#直二
-                if game[messageIdIndex][0] =='o':
+                if game[messageIdIndex][1] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
                 else:
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][10]))
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
             elif game[messageIdIndex][2] == game[messageIdIndex][5] == game[messageIdIndex][8]:#直三
-                if game[messageIdIndex][0] =='o':
+                if game[messageIdIndex][2] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
                 else:
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][10]))
@@ -147,7 +150,7 @@ class ooxx(Cog_Extension):
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
             elif game[messageIdIndex][2] == game[messageIdIndex][4] == game[messageIdIndex][6]:#斜/
-                if game[messageIdIndex][0] =='o':
+                if game[messageIdIndex][2] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
                 else:
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][10]))
