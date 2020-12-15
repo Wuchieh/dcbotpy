@@ -8,6 +8,7 @@ with open('setting.json','r',encoding='utf8') as jset:
 
 messageReactionId=[]
 messageId=[]
+gamerAndMessageId=[]
 gamer=[]
 game=[]
 def gameOver(i,index):
@@ -167,16 +168,28 @@ class ooxx(Cog_Extension):
     async def ooxxtest(self,ctx):
         print(messageReactionId)
         print(messageId)
+        print(gamerAndMessageId)
         print(gamer)
         print(game)
 
     @commands.command()
+    async def ooxxleave(self,ctx):
+        for i in range(0,len(gamerAndMessageId)):
+            if gamerAndMessageId[i][0] == ctx.message.author.id:
+                msg = await ctx.channel.fetch_message(gamerAndMessageId[i][1])
+                await msg.delete()
+                gamer.remove(gamerAndMessageId[i][0])
+                messageReactionId.remove(gamerAndMessageId[i][1])
+                gamerAndMessageId.remove(gamerAndMessageId[i])
+
+    @commands.command()
     async def ooxx(self,ctx):
         if ctx.message.author.id not in gamer:
-            msg = await ctx.send('玩家<@'+ str(ctx.author.id) +'>開始遊戲OOXX \n挑戰者請點擊下列圖標')
+            msg = await ctx.send('玩家<@'+ str(ctx.author.id) +'>開始遊戲OOXX \n挑戰者請點擊下列圖標 \n若想放棄遊戲請輸入 {}ooxxleave'.format(jdata['command_prefix']))
             await msg.add_reaction('👊')
             gamer.append(ctx.message.author.id)
             messageReactionId.append(msg.id)
+            gamerAndMessageId.append([ctx.message.author.id,msg.id])
         else:
             await ctx.send('你已開始一局遊戲')
 
