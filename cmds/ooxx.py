@@ -122,7 +122,7 @@ class ooxx(Cog_Extension):
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][10]))
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
-            elif game[messageIdIndex][0] == game[messageIdIndex][3] == game[messageIdIndex][4]:#直一
+            elif game[messageIdIndex][0] == game[messageIdIndex][3] == game[messageIdIndex][6]:#直一
                 if game[messageIdIndex][0] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
                 else:
