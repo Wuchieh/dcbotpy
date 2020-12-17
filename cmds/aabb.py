@@ -10,6 +10,7 @@ with open('setting.json','r',encoding='utf8') as jset:
 stat = 0
 aabbans = ''
 aabblist = []
+aabbPasswordAutoReset = 0
 aabbPasswordStatus = 0
 aabbPassword = []
 def jud(num):
@@ -50,9 +51,10 @@ def aabbPasswordGameReset():
     global aabbPasswordStatus,aabbPassword
     aabbPasswordStatus = 0
     aabbPassword = []
-    aabbPasswordStatus = 1
-    rannum = random.randint(1,100)
-    aabbPassword.append([rannum,1,100])
+    if aabbPasswordAutoReset == 1:
+        aabbPasswordStatus = 1  
+        rannum = random.randint(1,100)
+        aabbPassword.append([rannum,1,100])
 
 class aabb(Cog_Extension):
     @commands.group()
@@ -150,8 +152,30 @@ class aabb(Cog_Extension):
         +'  輸入　4519 = 0A0B\n'
         +'  輸入　3461 = 1A1B\n'
         +'```')
-        
-    @aabb.command()
+
+    
+    @commands.command(name='終極密碼autoreset', aliases=['autoreset'])
+    async def 終極密碼autoreset(self,ctx,index:int=9999999):
+        global aabbPasswordAutoReset
+        if int(index) == 9999999:
+            if aabbPasswordAutoReset == 0:
+                aabbPasswordAutoReset = 1
+                await ctx.send('終極密碼自動重啟已開啟')
+            elif aabbPasswordAutoReset == 1:
+                aabbPasswordAutoReset = 0
+                await ctx.send('終極密碼自動重啟已關閉')
+        elif int(index) == 0:
+            aabbPasswordAutoReset = 0
+            await ctx.send('終極密碼自動重啟已關閉')
+        elif int(index) == 1:
+            aabbPasswordAutoReset = 1
+            await ctx.send('終極密碼自動重啟已開啟')
+        if aabbPasswordAutoReset == 1:
+            print('終極密碼自動重啟已開啟')
+        else:
+            print('終極密碼自動重啟已關閉')
+
+    @aabb.command(name='終極密碼', aliases=['s'])
     async def 終極密碼(self,ctx):
         global aabbPasswordStatus,aabbPassword
         if aabbPasswordStatus == 0:

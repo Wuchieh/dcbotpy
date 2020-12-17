@@ -49,6 +49,9 @@ class ooxx(Cog_Extension):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,pl):
         if pl.message_id in messageReactionId and pl.user_id not in gamer and pl.user_id != self.bot.user.id and str(pl.emoji) == '👊':
+            for i in range(0,len(gamerAndMessageId)):
+                if gamerAndMessageId[i][1] == pl.message_id:
+                    gamerAndMessageId.remove(gamerAndMessageId[i])
             gamer.append(pl.user_id)
             messageReactionId.remove(pl.message_id)
             channel = self.bot.get_channel(pl.channel_id)
@@ -69,10 +72,11 @@ class ooxx(Cog_Extension):
             msg = await channel.send(message)
             for i in range(1,10):#index 0~8
                 await msg.add_reaction(gameRound(i))
+            await msg.add_reaction('😞')
             game[len(game)-1].append(msg.id)#index 11
             game[len(game)-1].append(0)#index 12
             messageId.append(msg.id)
-            await channel.send('遊戲開始<@{}> VS <@{}>'.format(user1.id, user2.id))
+            await channel.send('遊戲開始<@{}> VS <@{}> 按下😞即投降'.format(user1.id, user2.id))
 
         if pl.message_id in messageId and pl.user_id != self.bot.user.id:
             messageIdIndex=int()
@@ -81,19 +85,19 @@ class ooxx(Cog_Extension):
                     messageIdIndex = i
             channel = self.bot.get_channel(pl.channel_id)
             msg = await channel.fetch_message(pl.message_id)
-            if game[messageIdIndex][12] %2 == 0 and pl.user_id == game[messageIdIndex][9]:
+            if game[messageIdIndex][12] %2 == 0 and pl.user_id == game[messageIdIndex][9] and str(pl.emoji) != '😞':
                 await msg.clear_reaction(pl.emoji)
                 game[messageIdIndex].remove(gameRoundEmoji(str(pl.emoji)))
                 game[messageIdIndex].insert(gameRoundEmoji(str(pl.emoji))-1,'o')
                 game[messageIdIndex][12] += 1
-            elif game[messageIdIndex][12] %2 == 1 and pl.user_id == game[messageIdIndex][10]:
+            elif game[messageIdIndex][12] %2 == 1 and pl.user_id == game[messageIdIndex][10] and str(pl.emoji) != '😞':
                 await msg.clear_reaction(pl.emoji)
                 game[messageIdIndex].remove(gameRoundEmoji(str(pl.emoji)))
                 game[messageIdIndex].insert(gameRoundEmoji(str(pl.emoji))-1,'x')
                 game[messageIdIndex][12] += 1
             message=''
             a=1
-            for i in game[messageIdIndex]:
+            for i in game[messageIdIndex]:#ooxx遊戲排版
                 if a>9:
                     pass
                 elif a % 3==0:
@@ -101,6 +105,7 @@ class ooxx(Cog_Extension):
                 else:
                     message+='{}'.format(gameRound(i))
                 a+=1
+            #==========================勝利/平局判定================================================
             if game[messageIdIndex][0] == game[messageIdIndex][1] == game[messageIdIndex][2]:#行一
                 if game[messageIdIndex][0] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
@@ -122,7 +127,7 @@ class ooxx(Cog_Extension):
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][10]))
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
-            elif game[messageIdIndex][0] == game[messageIdIndex][3] == game[messageIdIndex][4]:#直一
+            elif game[messageIdIndex][0] == game[messageIdIndex][3] == game[messageIdIndex][6]:#直一
                 if game[messageIdIndex][0] =='o':
                     message+='\n{}勝利'.format(self.bot.get_user(game[messageIdIndex][9]))
                 else:
@@ -161,6 +166,21 @@ class ooxx(Cog_Extension):
                 message+='\n平局'
                 await msg.clear_reactions()
                 gameOver(game[messageIdIndex][11],messageIdIndex)
+            #==========================勝利/平局判定================================================
+            elif str(pl.emoji) == '😞':#投降用
+                async def surr(user1,user2):
+                    print(messageIdIndex)
+                    await msg.clear_reactions()
+                    gameOver(game[messageIdIndex][11],messageIdIndex)
+                    return str('\n{}已經投降 {}勝利').format(user1,user2)
+                if pl.user_id==game[messageIdIndex][9]:
+                    user1 = self.bot.get_user(game[messageIdIndex][9])
+                    user2 = self.bot.get_user(game[messageIdIndex][10])
+                    message+=await surr(user1,user2)
+                elif pl.user_id==game[messageIdIndex][10]:
+                    user1 = self.bot.get_user(game[messageIdIndex][10])
+                    user2 = self.bot.get_user(game[messageIdIndex][9])
+                    message+=await surr(user1,user2)
             await msg.edit(content=message)
             
 
