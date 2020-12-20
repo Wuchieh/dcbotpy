@@ -204,7 +204,7 @@ class ooxx(Cog_Extension):
 
     @commands.command()
     async def ooxx(self,ctx):
-        if ctx.message.author.id not in gamer:
+        if ctx.message.author.id not in gamer:#判斷是否已加入一場遊戲
             msg = await ctx.send('玩家<@'+ str(ctx.author.id) +'>開始遊戲OOXX \n挑戰者請點擊下列圖標 \n若想放棄遊戲請輸入 {}ooxxleave'.format(jdata['command_prefix']))
             await msg.add_reaction('👊')
             gamer.append(ctx.message.author.id)
