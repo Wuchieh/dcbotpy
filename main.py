@@ -21,7 +21,7 @@ bot = commands.Bot(command_prefix=jdata['command_prefix'],intents=intents)
 cmdpy = []
 bot.remove_command('help')
 
-@bot.group()
+'''@bot.group()
 async def help(ctx):
     await ctx.send('```css\n'
     +str(jdata['command_prefix'])+'ping 顯示機器人延遲\n'
@@ -41,7 +41,7 @@ async def help(ctx):
     +str(jdata['command_prefix'])+'aabb s 開始終極密碼\n'
     +str(jdata['command_prefix'])+'autoreset 終極密碼自動重啟\n'
     #+str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道'
-    +'```')
+    +'```')'''
 
 @bot.event
 async def on_ready():

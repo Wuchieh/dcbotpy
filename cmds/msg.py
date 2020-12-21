@@ -129,7 +129,7 @@ class Msg(Cog_Extension):
                         await user.send(msg)
         pass
 
-    @commands.command()
+    '''@commands.command()
     async def 身分組(self,ctx):
         await ctx.message.delete()
         emoji=['750374968864276570','750374967786471466','750374968113496123','750374968407097384','750374968105238630','752561204186054686','752363837260562472','752543133988028469','752529033006153778','752543133706748036','773559447954915338','773559314169593896','775051504968400957']
@@ -137,7 +137,30 @@ class Msg(Cog_Extension):
         print(msg.id)
         for i in emoji:
             bemoji = self.bot.get_emoji(int(i))
-            await msg.add_reaction(bemoji)
+            await msg.add_reaction(bemoji)'''
+
+    @commands.command()
+    async def help(self,ctx):
+        await ctx.send('```css\n'
+        +str(jdata['command_prefix'])+'ping 顯示機器人延遲\n'
+        +str(jdata['command_prefix'])+'ran 骰子遊戲1~10\n'
+        +str(jdata['command_prefix'])+'clear [num] 刪除指定數量的聊天內容\n'
+        +str(jdata['command_prefix'])+'sayd [msg] 使機器人說話\n'
+        #+str(jdata['command_prefix'])+'member 顯示伺服器中所有人的狀態\n'
+        #+str(jdata['command_prefix'])+'offline 顯示離線名單\n'
+        #+str(jdata['command_prefix'])+'online 顯示上線名單\n'
+        +str(jdata['command_prefix'])+'user 顯示個人訊息(管理員Debug用)\n'
+        +str(jdata['command_prefix'])+'ms 開始踩地雷遊戲 請找管理員開啟\n'
+        +str(jdata['command_prefix'])+'color help 顏色修改提示\n'
+        +str(jdata['command_prefix'])+'math [整數20~50] 開始math遊戲\n'
+        +str(jdata['command_prefix'])+'ooxx 開始OOXX遊戲\n'
+        +str(jdata['command_prefix'])+'snake 貪吃蛇(分數上限：88)\n'
+        +'=============AABB=============\n'
+        +str(jdata['command_prefix'])+'aabb help 顯示AABB遊戲提示\n'
+        +str(jdata['command_prefix'])+'aabb s 開始終極密碼\n'
+        +str(jdata['command_prefix'])+'autoreset 終極密碼自動重啟\n'
+        #+str(jdata['command_prefix'])+'invite [tag玩家] 邀請他人進入目前語音頻道'
+        +'```')
 
     
     @commands.command()
