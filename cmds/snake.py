@@ -19,7 +19,7 @@ game=[[999,999,999,999,999,999,999,999,999,999,999,999,999,999,999]#0
 gamedef = 88 #最高分數上限 不可大於88 [o]
 gamer = 0 #userId [x]
 gameStatusMax = 101 #目前尾巴最大值 [x]
-reaction=['⬆️','⬇️','➡️','⬅️'] #方向鍵 [o]
+reaction=['⬅️','⬆️','⬇️','➡️'] #方向鍵 [o]
 directionStatus=3 #判斷方向 [x]
 directionStatusIndex = 0 #判斷是否已經轉過彎[x]
 messageId= 0 #遊戲訊息ID[x]
@@ -39,7 +39,7 @@ def gameReset(): #若要修改參數請改下面這部分[x]為不可修改[o]�
     gamedef = 88 #最高分數上限 不可大於88 [o]
     gamer = 0 #userId [x]
     gameStatusMax = 101 #目前尾巴最大值 [x]
-    reaction=['⬆️','⬇️','➡️','⬅️'] #方向鍵 [o] 若要修改需改def direction & async def on_raw_reaction_add
+    reaction=['⬅️','⬆️','⬇️','➡️'] #方向鍵 [o] 若要修改需改def direction & async def on_raw_reaction_add
     directionStatus=3 #判斷方向 [x]
     directionStatusIndex = 0 #判斷是否已經轉過彎[x]
     messageId= 0 #遊戲訊息ID[x]
@@ -119,7 +119,6 @@ class snake(Cog_Extension):
                                 embed.add_field(name="遊戲結束", value="分數：{}".format(score), inline=True)
                                 gameOver = 1
                             elif game[a-1][b] == 1:
-                                print('貧果被吃掉了')
                                 c=1
                                 gameStatusMax+=1
                                 game[a][b]=gameStatusMax
@@ -135,7 +134,6 @@ class snake(Cog_Extension):
                                 embed.add_field(name="遊戲結束", value="分數：{}".format(score), inline=True)
                                 gameOver = 1
                             elif game[a+1][b] == 1:
-                                print('貧果被吃掉了')
                                 c=1
                                 gameStatusMax+=1
                                 game[a][b]=gameStatusMax
@@ -151,7 +149,6 @@ class snake(Cog_Extension):
                                 embed.add_field(name="遊戲結束", value="分數：{}".format(score), inline=True)
                                 gameOver = 1
                             elif game[a][b+1] == 1:
-                                print('貧果被吃掉了')
                                 c=1
                                 gameStatusMax+=1
                                 game[a][b]=gameStatusMax
@@ -167,7 +164,6 @@ class snake(Cog_Extension):
                                 embed.add_field(name="遊戲結束", value="分數：{}".format(score), inline=True)
                                 gameOver = 1
                             elif game[a][b-1] == 1:
-                                print('貧果被吃掉了')
                                 c=1
                                 gameStatusMax+=1
                                 game[a][b]=gameStatusMax
@@ -214,7 +210,6 @@ class snake(Cog_Extension):
             elif str(pl.emoji) == '⬅️' and directionStatus != 3 and directionStatusIndex == 0:
                 directionStatus = direction(str(pl.emoji))
                 directionStatusIndex = 1
-            print(directionStatus)
             await message.remove_reaction(pl.emoji,pl.member)
 
     @commands.command()

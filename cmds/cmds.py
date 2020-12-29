@@ -8,13 +8,62 @@ with open('setting.json','r',encoding='utf8') as jset:
 
 class cmds(Cog_Extension):
     @commands.command()
-    async def cmds(self,ctx,msgid,*,remsg):
-        if ctx.author.id == jdata['owner']:
-            await ctx.message.delete()
-            guild = self.bot.get_guild(ctx.message.guild.id)
-            channel = guild.get_channel(ctx.message.channel.id)
-            msg = await channel.fetch_message(msgid)
-            await msg.edit(content=remsg)
+    async def guilds(self,ctx):
+        guilds = self.bot.guilds
+        message = '```py\n'
+        for i in guilds:
+            message += 'name = {}, ID = {}\n'.format(i.name,i.id)
+            print('name = {}, ID = {}'.format(i.name,i.id))
+        message+='```'
+        await ctx.send(message)
+    
+    @commands.command()
+    async def channels(self,ctx,guildid:str='/0'):
+        if guildid == '/0':
+            guild = ctx.guild
+        else:
+            guild = self.bot.get_guild(int(guildid))
+        if guild == None:
+            await ctx.send('Guild Id Error')
+            return
+        message = '```py\n'
+        channels = guild.channels
+        for i in channels:
+            message += 'name = {}, ID = {}\n'.format(i.name,i.id)
+            if len(message)>2000:
+                num = len('name = {}, ID = {}\n'.format(i.name,i.id))
+                message = message[:-num]
+                message += '```'
+                await ctx.send(message)
+                message = '```py\n'
+                message += 'name = {}, ID = {}\n'.format(i.name,i.id)
+            print('name = {}, ID = {}'.format(i.name,i.id))
+        message += '```'
+        await ctx.send(message)
+
+    @commands.command()
+    async def members(self,ctx,guildid:str='/0'):
+        if guildid == '/0':
+            guild = ctx.guild
+        else:
+            guild = self.bot.get_guild(int(guildid))
+        if guild == None:
+            await ctx.send('Guild Id Error')
+            return
+        members = guild.members
+        message = '```css\n'
+        for i in members:
+            message += 'name = {}, ID = {}\n'.format(i.name,i.id)
+            if len(message)>2000:
+                num = len('name = {}, ID = {}\n'.format(i.name,i.id))
+                message = message[:-num]
+                message += '```'
+                await ctx.send(message)
+                message = '```py\n'
+                message += 'name = {}, ID = {}\n'.format(i.name,i.id)
+            print('name = {}, ID = {}'.format(i.name,i.id))
+        message += '```'
+        await ctx.send(message)
 
 def setup(bot):
     bot.add_cog(cmds(bot))

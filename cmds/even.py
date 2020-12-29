@@ -64,23 +64,28 @@ class even(Cog_Extension):
 #"""
     @commands.Cog.listener()
     async def on_member_join(self,member):
+        with open('levelmembers.json','r',encoding='utf8') as jfile2:
+            jdata2 = json.load(jfile2)
         if member.guild.id == int(706889259692589077):
             guild = self.bot.get_guild(706889259692589077)
-            #channel = guild.get_channel(775054378540859434)
-            #await channel.send('<@'+ str(member.id) +'>你他媽給我去看群組規定和打自我較紹唷！現在立刻馬上開始動作!!')
-            #await channel.send('歡迎<@'+ str(member.id) +'>請先看一下群組規定和打一下自我介紹唷！\n記的去<#775054344227651584>領取遊戲身份組唷!!')
             role = guild.get_role(int(707439119176826880))
             await member.add_roles(role)
             print(str(member)+'已加入server 並且給予了'+role.name+'身分組')
-"""    
+            if member.id in jdata2['members']:
+                channel = member.guild.get_channel(775054378540859434)
+                await channel.send('小拉基回歸{}'.format(member.id))
+  
     @commands.Cog.listener()
     async def on_member_remove(self,member):
         if member.guild.id == int(706889259692589077):
-            guild = self.bot.get_guild(706889259692589077)
-            channel = guild.get_channel(775054433213612073)
-            a=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            await channel.send(a+' '+str(member)+' 已被貶至人間煉獄 永世不得超生')
-"""    
+            with open('levelmembers.json','r',encoding='utf8') as jfile2:
+                jdata2 = json.load(jfile2)
+                jdata2['members'].append(member.id)
+            with open('levelmembers.json','w',encoding='utf8') as jfile2:
+                json.dump(jdata2,jfile2,indent = 4)
+            channel = member.guild.get_channel(775302781320822805)
+            await channel.send('小拉基退出{}'.format(member.id))
+
 
 def setup(bot):
     bot.add_cog(even(bot))

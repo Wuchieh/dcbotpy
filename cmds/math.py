@@ -42,6 +42,7 @@ class math(Cog_Extension):
             await msg.add_reaction('1️⃣')
             await msg.add_reaction('2️⃣')
             await msg.add_reaction('3️⃣')
+
         if mathClick == 1 and pl.message_id == msgid:
             guild = self.bot.get_guild(pl.guild_id)
             channel = guild.get_channel(pl.channel_id)
@@ -66,13 +67,26 @@ class math(Cog_Extension):
                 gameMember = []
         pass
     @commands.command()
+    async def mathleave(self,ctx):
+        global msgid,mathClick,gameStatus,gameMember,gameNember,gameRound
+        await ctx.message.delete()
+        message = await ctx.message.channel.fetch_message(msgid)
+        await message.delete()
+        msgid = int()
+        mathClick = 0
+        gameStatus = 0
+        gameMember = []
+        gameNember = int()
+        gameRound = 0
+
+    @commands.command()
     async def math(self,ctx, num: int = 20):
         global msgid,gameMember,gameStatus,gameNember
         await ctx.message.delete()
         if gameStatus == 0:
             if str(num).isdigit():
                 if int(num) >= 20 and int(num) <= 50 :
-                    msg = await ctx.send('玩家<@'+ str(ctx.author.id) +'>開始遊戲math：{} \n挑戰者請點擊下列圖標'.format(num))
+                    msg = await ctx.send('玩家<@'+ str(ctx.author.id) +'>開始遊戲math：{} \n挑戰者請點擊下列圖標 {}mathleave 可取消遊戲'.format(num,jdata['command_prefix']))
                     await msg.add_reaction('👊')
                     msgid = msg.id
                     gameMember.append(ctx.author.id)

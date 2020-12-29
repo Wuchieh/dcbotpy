@@ -54,7 +54,7 @@ def aabbPasswordGameReset():
     if aabbPasswordAutoReset == 1:
         aabbPasswordStatus = 1  
         rannum = random.randint(1,100)
-        aabbPassword.append([rannum,1,100])
+        aabbPassword.append([rannum,0,100])
 
 class aabb(Cog_Extension):
     @commands.group()
@@ -143,7 +143,7 @@ class aabb(Cog_Extension):
         +'  '+str(jdata['command_prefix'])+'aabb reset　重置遊戲並顯示上局答案\n'
         +'  當遊戲開始後輸入 '+str(jdata['command_prefix'])+'aabb [數字] 即可遊玩\n'
         +'AABB規則：\n'
-        +'  ,aabb 輸入4位數字 \n'
+        +'  '+str(jdata['command_prefix'])+'aabb 輸入4位數字 \n'
         +'  若答案中有此數字且位子正確即為A\n'
         +'  若答案中有此數字但位子錯誤即為B\n'
         +'ex：\n'
@@ -181,10 +181,10 @@ class aabb(Cog_Extension):
         if aabbPasswordStatus == 0:
             aabbPasswordStatus = 1
             rannum = random.randint(1,100)
-            print(rannum)
-            aabbPassword.append([rannum,1,100])
-            print(aabbPassword)
-            await ctx.send('終極密碼！！\n遊戲開始 範圍1~100')
+            #print(rannum)
+            aabbPassword.append([rannum,0,100])
+            #print(aabbPassword)
+            await ctx.send('終極密碼！！\n遊戲開始 範圍0~100')
     
     @commands.Cog.listener()
     async def on_message(self,msg):
@@ -201,22 +201,14 @@ class aabb(Cog_Extension):
                         return
                     elif int(msg.content) < aabbPassword[0][0] and int(msg.content) > aabbPassword[0][1]:
                         aabbPassword[0][1] = int(msg.content)
-                        print('小數字已變更')
+                        #print('小數字已變更')
                     elif int(msg.content) > aabbPassword[0][0] and int(msg.content) < aabbPassword[0][2]:
                         aabbPassword[0][2] = int(msg.content)
-                        print('大數字已變更')
+                        #print('大數字已變更')
                     await msg.channel.send(str(aabbPassword[0][1])+' ~ '+str(aabbPassword[0][2]))
                     print(aabbPassword)
                         
         pass
-
-    '''@aabb.command()
-    async def ans(self,ctx):
-        if str(ctx.author.id) == jdata['owner']:
-            if aabbans == '':
-                await ctx.send('遊戲尚未開始')
-                return
-            await ctx.send(str(aabbans))'''
 
 
 def setup(bot):

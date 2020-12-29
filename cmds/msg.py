@@ -19,7 +19,7 @@ class Msg(Cog_Extension):
                 await msg.delete()
         except discord.errors.NotFound:
             pass
-        if ',setuserid' in msg.content:
+        if msg.content[:1] == jdata['command_prefix']:
             return
         if str(msg.channel.type) == 'private' and msg.author != self.bot.user and str(msg.author.id) != jdata['owner']:
             user2 = self.bot.get_user(int(jdata['owner']))
@@ -43,15 +43,12 @@ class Msg(Cog_Extension):
                     chonMessageUser(int(userid))
 
     @commands.command()
-    async def sayd(self,ctx,*msg):
+    async def sayd(self,ctx,*,msg:str='/0'):
         await ctx.message.delete()
-        if msg == ():
+        if msg == '/0':
             pass
         else:
-            message = ''
-            for i in msg:
-                message += i+' '
-            await ctx.send(message)
+            await ctx.send(msg)
     
     @commands.command()
     async def edit(self,ctx,msgid,*,remsg):
@@ -128,16 +125,6 @@ class Msg(Cog_Extension):
                     else:
                         await user.send(msg)
         pass
-
-    '''@commands.command()
-    async def 身分組(self,ctx):
-        await ctx.message.delete()
-        emoji=['750374968864276570','750374967786471466','750374968113496123','750374968407097384','750374968105238630','752561204186054686','752363837260562472','752543133988028469','752529033006153778','752543133706748036','773559447954915338','773559314169593896','775051504968400957']
-        msg = await ctx.send("<:lol:750374968864276570> ： <@&775041162645864481>\n<:GTA:750374967786471466> ： <@&775049972663451650>\n<:R6:750374968113496123> ： <@&775050130360893500>\n<:pubg:750374968407097384> ： <@&775050314885365840>\n<:VALORANT:750374968105238630> ： <@&775050478400176178>\n<:L4D2:752561204186054686> ： <@&775050635497963530>\n<:TheDivision2:752363837260562472> ： <@&775050758608388097>\n<:Warframe:752543133988028469> ： <@&775050821641044038>\n<:Minecraft:752529033006153778> ： <@&775050825659711499>\n<:Fallguys:752543133706748036> ： <@&775050954755014729>\n<:ArenaOfValor:773559447954915338> ： <@&775050955347066891>\n<:ApexLegend:773559314169593896> ： <@&775050956056428595>\n<:among:775051504968400957> ： <@&775051174020644885>")
-        print(msg.id)
-        for i in emoji:
-            bemoji = self.bot.get_emoji(int(i))
-            await msg.add_reaction(bemoji)'''
 
     @commands.command()
     async def help(self,ctx):
